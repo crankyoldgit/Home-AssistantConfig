@@ -1,0 +1,68 @@
+# Example automations.yaml entry
+- id: sunrise_lights_off
+  alias: Turn off lights before sun rises
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: "+00:30:00"
+  action:
+  - service: light.turn_off
+    entity_id: group.upstairs
+- id: irrigation_auto_turn_off
+  alias: "Irrigation: Automatically turn off"
+  trigger:
+    - platform: state
+      entity_id: group.irrigation
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.irrigation_timer
+- id: irrigation_reset_timer
+  alias: "Irrigation: reset timer"
+  trigger:
+    - platform: state
+      entity_id: group.irrigation
+      to: 'off'
+  action:
+    - service: script.turn_off
+      entity_id: script.irrigation_timer
+- id: irrigation_1_daily_start
+  alias: "Irrigation: Relay 1 Daily start"
+  trigger:
+    - platform: time
+      at: '23:15:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.hours_of_no_rain_in_last_3_days
+        above: 48
+      - condition: numeric_state
+        entity_id: sensor.bom_rain_today
+        below: 2
+      - condition: numeric_state
+        entity_id: sensor.irrigation_1_on_time_today
+        below: 0.5
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.irrigation_relay_1
+- id: irrigation_2_daily_start
+  alias: "Irrigation: Relay 2 Daily start"
+  trigger:
+    - platform: time
+      at: '20:45:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.hours_of_no_rain_in_last_3_days
+        above: 48
+      - condition: numeric_state
+        entity_id: sensor.bom_rain_today
+        below: 2
+      - condition: numeric_state
+        entity_id: sensor.irrigation_2_on_time_today
+        below: 0.5
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.irrigation_relay_2

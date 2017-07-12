@@ -1,0 +1,686 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 28
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Australia/Brisbane
+
+  # config:
+
+  customize:
+    switch.living_room_fan:
+      friendly_name: Fan
+      icon: mdi:fan
+    switch.samsung_tv:
+      icon: mdi:television
+      emulated_hue: false
+    switch.stereo_power:
+      friendly_name: Stereo
+      icon: mdi:speaker
+      emulated_hue: false
+    switch.stereo_volume:
+      friendly_name: Stereo Volume
+      icon: mdi:speaker
+    switch.kettle:
+      friendly_name: Kettle
+      icon: mdi:kettle
+    switch.sonoff_printer:
+      friendly_name: Printer
+      icon: mdi:printer
+    switch.3D_Printer:
+      friendly_name: 3D Printer
+      icon: mdi:printer-3d
+      emulated_hue: false
+    switch.Irrigation_Relay_1:
+      friendly_name: Irrigation Relay 1
+      icon: mdi:water
+      emulated_hue: false
+    switch.Irrigation_Relay_2:
+      friendly_name: Irrigation Relay 2
+      icon: mdi:water
+      emulated_hue: false
+    switch.Irrigation_Relay_3:
+      friendly_name: Irrigation Relay 3
+      icon: mdi:water
+      emulated_hue: false
+    switch.Irrigation_Relay_4:
+      friendly_name: Irrigation Relay 4
+      icon: mdi:water
+      emulated_hue: false
+    switch.kelvinator_air_conditioner:
+      friendly_name: Air Conditioner
+      icon: mdi:air-conditioner
+    group.kitchen_lights:
+      friendly_name: Kitchen Lights
+    group.living_room:
+      friendly_name: Living Room
+    group.living_room_lights_warm:
+      friendly_name: Living Room Lights
+    group.tv_lights:
+      friendly_name: Television Lights
+    group.tv_power:
+      emulated_hue: false
+    group.Couch_lights:
+      friendly_name: Couch Lights
+    group.doorway_lights:
+      friendly_name: Doorway lights
+    group.cat_room:
+      friendly_name: Cat Room
+    group.main_bedroom:
+      friendly_name: Bedroom
+    light.living_room_lights_warm_1:
+      emulated_hue: false
+    light.living_room_lights_warm_2:
+      emulated_hue: false
+    light.Living_Room_Lights_Cold_1:
+      emulated_hue: false
+    light.Living_Room_Lights_Cold_2:
+      emulated_hue: false
+    light.Living_Room_Lights_Cold_3:
+      emulated_hue: false
+    light.Living_Room_Lights_Cold_4:
+      emulated_hue: false
+    light.Living_Room_Lights_Cold_5:
+      emulated_hue: false
+    light.Living_Room_Lights_Cold_6:
+      emulated_hue: false
+    # environment:
+    #   emulated_hue: false
+    light.Main_Bedroom_Downlight:
+      friendly_name: Bedroom Light
+    sensor.bedroom_main_downlight_switch:
+      friendly_name: Bedroom Light Switch
+    light.cat_room_downlight:
+      friendly_name: Cat Room Lights
+    sensor.cat_room_light_switch:
+      friendly_name: Cat Room Light Switch
+      icon: mdi:power
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  base_url: !secret base_url
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+# sensor:
+#   platform: yr
+
+# Text to speech
+tts:
+  platform: google
+
+mqtt:
+  broker: 10.20.0.253
+  port: 1883
+  client_id: home-assistant-1
+  keepalive: 60
+  # username: USERNAME
+  # password: PASSWORD
+  # certificate: /home/paulus/dev/addtrustexternalcaroot.crt
+  protocol: 3.1
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+    qos: 1
+    retain: true
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
+    qos: 1
+    retain: true
+
+switch:
+  - platform: mqtt
+    name: "Living room fan"
+    state_topic: "stat/livingroom_fan/POWER"
+    command_topic: "cmnd/livingroom_fan/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: stereo_power
+    command_topic: "ir_livingroom/commands/sendSherwood"
+    payload_on: "C1A28877"
+    payload_off: "C1A2B847"
+    optimistic: true
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Samsung TV"
+    command_topic: "ir_livingroom/commands/sendSamsung"
+    payload_on: "E0E09966"
+    payload_off: "E0E019E6"
+    optimistic: true
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: stereo_volume
+    command_topic: "ir_livingroom/commands/sendSherwoodRpt"
+    payload_on: "C1A2E21D,8"
+    payload_off: "C1A2D22D,8"
+    optimistic: true
+    qos: 0
+    retain: false
+  - platform: template
+    switches:
+      stereo:
+        value_template: "{{ is_state('switch.stereo_power', 'on') }}"
+        turn_on:
+          service: script.turn_on_music
+        turn_off:
+          service: switch.turn_off
+          entity_id: switch.stereo_power
+      tv:
+        value_template: "{{ is_state('switch.samsung_tv', 'on') }}"
+        turn_on:
+          service: script.turn_on_tv
+        turn_off:
+          service: switch.turn_off
+          entity_id: switch.samsung_tv
+  # - platform: mqtt
+  #   name: "Kettle"
+  #   state_topic: "stat/kettle/POWER"
+  #   command_topic: "cmnd/kettle/POWER"
+  #   payload_on: "ON"
+  #   payload_off: "OFF"
+  #   optimistic: false
+  #   qos: 0
+  #   retain: false
+  - platform: mqtt
+    name: "Kelvinator Air Conditioner"
+    command_topic: "ir_livingroom/commands/sendKelvinator"
+    payload_on: "0x190B8050000000E0190B8070000010f0"
+    payload_off: "0x110B805000000060110B807000001070"
+    optimistic: true
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "3D Printer"
+    state_topic: "stat/3d_printer_power/POWER"
+    command_topic: "cmnd/3d_printer_power/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 1"
+    state_topic: "easyesp/irrigation/Relay1/Switch"
+    command_topic: "easyesp/irrigation/gpio/14"
+    payload_on: "0"
+    payload_off: "1"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 2"
+    state_topic: "easyesp/irrigation/Relay2/Switch"
+    command_topic: "easyesp/irrigation/gpio/12"
+    payload_on: "0"
+    payload_off: "1"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 3"
+    state_topic: "easyesp/irrigation/Relay3/Switch"
+    command_topic: "easyesp/irrigation/gpio/13"
+    payload_on: "0"
+    payload_off: "1"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 4"
+    state_topic: "easyesp/irrigation/Relay4/Switch"
+    command_topic: "easyesp/irrigation/gpio/0"
+    payload_on: "0"
+    payload_off: "1"
+    optimistic: false
+    qos: 0
+    retain: false
+
+light:
+  - platform: mqtt
+    name: "Left Kitchen Lights"
+    command_topic: "cmnd/kitchen_lights_1/POWER"
+    state_topic: "stat/kitchen_lights_1/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Right Kitchen Lights"
+    command_topic: "cmnd/kitchen_lights_2/POWER"
+    state_topic: "stat/kitchen_lights_2/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Warm 1"
+    command_topic: "cmnd/livingroom_downlight_warm_1/POWER"
+    state_topic: "stat/livingroom_downlight_warm_1/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Warm 2"
+    command_topic: "cmnd/livingroom_downlight_warm_2/POWER"
+    state_topic: "stat/livingroom_downlight_warm_2/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Cold 1"
+    command_topic: "cmnd/livingroom_downlight_cold_1_1/POWER"
+    state_topic: "stat/livingroom_downlight_cold_1_1/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Cold 2"
+    command_topic: "cmnd/livingroom_downlight_cold_1_2/POWER"
+    state_topic: "stat/livingroom_downlight_cold_1_2/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Cold 3"
+    command_topic: "cmnd/livingroom_downlight_cold_2_1/POWER"
+    state_topic: "stat/livingroom_downlight_cold_2_1/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Cold 4"
+    command_topic: "cmnd/livingroom_downlight_cold_2_2/POWER"
+    state_topic: "stat/livingroom_downlight_cold_2_2/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Cold 5"
+    command_topic: "cmnd/livingroom_downlight_cold_2_3/POWER"
+    state_topic: "stat/livingroom_downlight_cold_2_3/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Living Room Lights Cold 6"
+    command_topic: "cmnd/livingroom_downlight_cold_2_4/POWER"
+    state_topic: "stat/livingroom_downlight_cold_2_4/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Main Bedroom Downlight"
+    command_topic: "cmnd/bedroom_main_downlight/POWER"
+    state_topic: "stat/bedroom_main_downlight/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Cat Room Downlight"
+    command_topic: "cmnd/cat_room_lights/POWER"
+    state_topic: "stat/cat_room_lights/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+
+sensor:
+  - platform: bom
+    zone_id: IDQ60801
+    wmo_id: 94575
+    monitored_conditions:
+      - wmo
+      - name
+      - history_product
+      - local_date_time
+      - local_date_time_full
+      - aifstime_utc
+      - lat
+      - lon
+      - apparent_t
+      - cloud
+      - cloud_base_m
+      - cloud_oktas
+      - cloud_type_id
+      - cloud_type
+      - delta_t
+      - gust_kmh
+      - gust_kt
+      - air_temp
+      - dewpt
+      - press
+      - press_qnh
+      - press_msl
+      - press_tend
+      - rain_trace
+      - rel_hum
+      - sea_state
+      - swell_dir_worded
+      - swell_height
+      - swell_period
+      - vis_km
+      - weather
+      - wind_dir
+      - wind_spd_kmh
+      - wind_spd_kt
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    latitude: !secret latitude
+    longitude: !secret longitude
+    monitored_conditions:
+      - precip_probability
+      - temperature
+      - precip_intensity_max
+      - summary
+      - icon
+      - nearest_storm_distance
+    units: auto
+    update_inverval:
+      minutes: 30
+  # - platform: mqtt
+  #   state_topic: "tele/bedroom_main_downlight/DS18B20/TEMPERATURE"
+  #   name: "Bedroom Temperature"
+  #   unit_of_measure: '°C'
+  - platform: mqtt
+    state_topic: "tele/cat_room_lights/SENSOR"
+    name: cat_room_light_switch
+    value_template: '{{ value_json.Switch1 }}'
+  - platform: mqtt
+    state_topic: "tele/bedroom_main_downlight/SENSOR"
+    name: bedroom_main_downlight_switch
+    value_template: '{{ value_json.Switch1 }}'
+  - platform: history_stats
+    name: Hours_of_no_rain_in_last_3_days
+    entity_id: sensor.bom_rain_today
+    state: '0.0'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      days: 3
+  - platform: history_stats
+    name: Irrigation_1_on_time_18h
+    entity_id: switch.Irrigation_Relay_1
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_2_on_time_18h
+    entity_id: switch.Irrigation_Relay_2
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+
+emulated_hue:
+  type: google_home
+  listen_port: 80
+
+group:
+  ### Views
+  livingroom_view:
+    view: yes
+    name: Living Room
+    entities:
+      group.living_room
+  kitchen_view:
+    view: yes
+    name: Kitchen
+    entities:
+      - group.kitchen
+  cat_room_view:
+    view: yes
+    name: Cat Room
+    entities:
+      - group.cat_room
+  main_bedroom_view:
+    view: yes
+    name: Bedroom
+    entities:
+      - group.main_bedroom
+  garden_view:
+    view: yes
+    name: Garden
+    entities:
+      - group.irrigation
+  environment_view:
+    view: yes
+    name: Environment
+    entities:
+      - group.environment
+  ### Groups
+  kitchen_lights:
+    - light.left_kitchen_lights
+    - light.right_kitchen_lights
+  kitchen:
+    - light.left_kitchen_lights
+    - light.right_kitchen_lights
+    # - switch.kettle
+  tv_power:
+    - switch.samsung_tv
+    - switch.stereo_power
+  living_room_lights_warm:
+    - light.living_room_lights_warm_1
+    - light.living_room_lights_warm_2
+  doorway_lights:
+    - light.Living_Room_Lights_Cold_1
+    - light.Living_Room_Lights_Cold_2
+  tv_lights:
+    - light.Living_Room_Lights_Cold_4
+    - light.Living_Room_Lights_Cold_6
+  couch_lights:
+    - light.Living_Room_Lights_Cold_3
+    - light.Living_Room_Lights_Cold_5
+  bright_living_room_lights:
+    - group.doorway_lights
+    - group.tv_lights
+    - group.couch_lights
+  living_room:
+    - switch.samsung_tv
+    - switch.stereo_power
+    - switch.stereo_volume
+    - switch.living_room_fan
+    - switch.kelvinator_air_conditioner
+    - group.living_room_lights_warm
+    - group.bright_living_room_lights
+    - media_player.living_room
+  main_bedroom:
+    - light.Main_Bedroom_Downlight
+    - sensor.bedroom_main_downlight_switch
+  upstairs:
+    - group.kitchen
+    - group.living_room
+  cat_room:
+    - light.cat_room_downlight
+    - sensor.cat_room_light_switch
+    - switch.3D_Printer
+  irrigation:
+    - input_slider.irrigation_run_time
+    - switch.Irrigation_Relay_1
+    - switch.Irrigation_Relay_2
+    - switch.Irrigation_Relay_3
+    - switch.Irrigation_Relay_4
+  environment:
+    - sun.sun
+    - sensor.bom_wmo
+    - sensor.bom_station_name
+    - sensor.bom_zone
+    - sensor.bom_local_time
+    - sensor.bom_local_time_full
+    - sensor.bom_utc_time_full
+    - sensor.bom_lat
+    - sensor.bom_long
+    - sensor.bom_feels_like_c
+    - sensor.bom_cloud
+    - sensor.bom_cloud_base
+    - sensor.bom_cloud_oktas
+    - sensor.bom_cloud_type_id
+    - sensor.bom_cloud_type
+    - sensor.bom_delta_temp_c
+    - sensor.bom_wind_gust_kmh
+    - sensor.bom_wind_gust_kt
+    - sensor.bom_air_temp_c
+    - sensor.bom_dew_point_c
+    - sensor.bom_pressure_mb
+    - sensor.bom_pressure_qnh
+    - sensor.bom_pressure_msl
+    - sensor.bom_pressure_tend
+    - sensor.bom_rain_today
+    - sensor.bom_relative_humidity
+    - sensor.bom_sea_state
+    - sensor.bom_swell_direction
+    - sensor.bom_swell_height
+    - sensor.bom_swell_period
+    - sensor.bom_visability_km
+    - sensor.bom_weather
+    - sensor.bom_wind_direction
+    - sensor.bom_wind_speed_kmh
+    - sensor.bom_wind_direction_kt
+
+# Example script component containing script syntax
+script:
+  turn_on_music:
+    sequence:
+      # This is written using the Script Syntax
+      - service: switch.turn_on
+        entity_id: switch.stereo_power
+      - delay:
+          seconds: 2
+      # Turn up the stereo volume down to about 0.
+      - service: mqtt.publish
+        data:
+          topic: "ir_livingroom/commands/sendSherwoodRpt"
+          payload: "C1A2D22D,40"
+      - delay:
+          seconds: 2
+      # Set to stereo to Tape input.
+      - service: mqtt.publish
+        data:
+          topic: "ir_livingroom/commands/sendSherwood"
+          payload: "C1A2DA25"
+      # Turn up the volume by about 6.
+      - service: mqtt.publish
+        data:
+          topic: "ir_livingroom/commands/sendSherwoodRpt"
+          payload: "C1A2E21D,5"
+  turn_on_tv:
+    sequence:
+      # This is written using the Script Syntax
+      - alias: turn on stereo and tv
+        service: switch.turn_on
+        entity_id: group.tv_power
+      - delay:
+          seconds: 2
+      # Turn up the stereo volume down to about 0.
+      - service: mqtt.publish
+        data:
+          topic: "ir_livingroom/commands/sendSherwoodRpt"
+          payload: "C1A2D22D,40"
+      - delay:
+          seconds: 2
+      # Switch Stereo to Video 2 Input
+      - service: mqtt.publish
+        data:
+          topic: "ir_livingroom/commands/sendSherwood"
+          payload: "C1A25AA5"
+      # Turn up the Stereo volume by about 30.
+      - service: mqtt.publish
+        data:
+          topic: "ir_livingroom/commands/sendSherwoodRpt"
+          payload: "C1A2E21D,21"
+      - delay:
+          seconds: 2
+      # Switch TV to HDMI 2
+      - service: mqtt.publish
+        data:
+          topic: "ir_livingroom/commands/sendSamsung"
+          payload: "E0E07D82"
+  irrigation_timer:
+    alias: "Irrigation Timer"
+    sequence:
+      - delay: '00:{{ states.input_slider.irrigation_run_time.state | int }}:00'
+      - service: homeassistant.turn_off
+        data:
+          entity_id: group.irrigation
+
+input_slider:
+  irrigation_run_time:
+    name: Irrigation Run Time
+    initial: 10
+    min: 1
+    max: 60
+    step: 1
+automation: !include automations.yaml
+
+#automation old:
+#  - alias: Turn off lights before sun rises
+#    trigger:
+#      platform: sun
+#      event: sunrise
+#      offset: "+00:30:00"
+#    action:
+#      service: light.turn_off
+#      entity_id: group.upstairs
