@@ -1,0 +1,64 @@
+# Example script component containing script syntax
+turn_on_music:
+  sequence:
+    # This is written using the Script Syntax
+    - service: switch.turn_on
+      entity_id: switch.stereo_power
+    - delay:
+        seconds: 2
+    # Turn up the stereo volume down to about 0.
+    - service: mqtt.publish
+      data:
+        topic: "ir_livingroom/commands/sendSherwoodRpt"
+        payload: "C1A2D22D,40"
+    - delay:
+        seconds: 2
+    # Set to stereo to Tape input.
+    - service: mqtt.publish
+      data:
+        topic: "ir_livingroom/commands/sendSherwood"
+        payload: "C1A2DA25"
+    # Turn up the volume by about 6.
+    - service: mqtt.publish
+      data:
+        topic: "ir_livingroom/commands/sendSherwoodRpt"
+        payload: "C1A2E21D,5"
+turn_on_tv:
+  sequence:
+    # This is written using the Script Syntax
+    - alias: turn on stereo and tv
+      service: switch.turn_on
+      entity_id: group.tv_power
+    - delay:
+        seconds: 2
+    # Turn up the stereo volume down to about 0.
+    - service: mqtt.publish
+      data:
+        topic: "ir_livingroom/commands/sendSherwoodRpt"
+        payload: "C1A2D22D,40"
+    - delay:
+        seconds: 2
+    # Switch Stereo to Video 2 Input
+    - service: mqtt.publish
+      data:
+        topic: "ir_livingroom/commands/sendSherwood"
+        payload: "C1A25AA5"
+    # Turn up the Stereo volume by about 30.
+    - service: mqtt.publish
+      data:
+        topic: "ir_livingroom/commands/sendSherwoodRpt"
+        payload: "C1A2E21D,21"
+    - delay:
+        seconds: 2
+    # Switch TV to HDMI 2
+    - service: mqtt.publish
+      data:
+        topic: "ir_livingroom/commands/sendSamsung"
+        payload: "E0E07D82"
+irrigation_timer:
+  alias: "Irrigation Timer"
+  sequence:
+    - delay: '00:{{ states.input_slider.irrigation_run_time.state | int }}:00'
+    - service: homeassistant.turn_off
+      data:
+        entity_id: group.irrigation
