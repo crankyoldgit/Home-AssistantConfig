@@ -14,7 +14,7 @@ homeassistant:
   # Include the customizations.
   customize: !include customize.yaml
 
-  # config:
+config:
   
 # Show links to resources in log and frontend
 # introduction:
@@ -383,6 +383,22 @@ sensor:
   - platform: history_stats
     name: Irrigation_2_on_time_18h
     entity_id: switch.Irrigation_Relay_2
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_3_on_time_18h
+    entity_id: switch.Irrigation_Relay_3
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_4_on_time_18h
+    entity_id: switch.Irrigation_Relay_4
     state: 'on'
     type: time
     end: '{{ now() }}'

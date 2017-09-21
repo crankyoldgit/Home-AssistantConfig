@@ -26,9 +26,9 @@ switch.Irrigation_Relay_1:
   icon: mdi:water
   emulated_hue: false
 switch.Irrigation_Relay_2:
-  friendly_name: Irrigation Relay 2
+  friendly_name: Bamboo Irrigation
   icon: mdi:water
-  emulated_hue: false
+  emulated_hue: true
 switch.Irrigation_Relay_3:
   friendly_name: Irrigation Relay 3
   icon: mdi:water
@@ -74,8 +74,6 @@ light.Living_Room_Lights_Cold_5:
   emulated_hue: false
 light.Living_Room_Lights_Cold_6:
   emulated_hue: false
-# environment:
-#   emulated_hue: false
 light.Main_Bedroom_Downlight:
   friendly_name: Bedroom Light
 sensor.bedroom_main_downlight_switch:
@@ -85,3 +83,7 @@ light.cat_room_downlight:
 sensor.cat_room_light_switch:
   friendly_name: Cat Room Light Switch
   icon: mdi:power
+input_slider.irrigation_run_time:
+  icon: mdi:clock-end
+switch.irrigation_relay_2:
+  friendly_name: Bamboo Irrigation
