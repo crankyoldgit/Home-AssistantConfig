@@ -22,21 +22,21 @@ switch.3D_Printer:
   icon: mdi:printer-3d
   emulated_hue: false
 switch.Irrigation_Relay_1:
-  friendly_name: Irrigation Relay 1
+  friendly_name: Irrigation Relay 1 (Unused)
   icon: mdi:water
   emulated_hue: false
 switch.Irrigation_Relay_2:
-  friendly_name: Bamboo Irrigation
+  friendly_name: Citrus Irrigation
   icon: mdi:water
   emulated_hue: true
 switch.Irrigation_Relay_3:
-  friendly_name: Irrigation Relay 3
+  friendly_name: Side Path Irrigation
   icon: mdi:water
-  emulated_hue: false
+  emulated_hue: true
 switch.Irrigation_Relay_4:
-  friendly_name: Irrigation Relay 4
+  friendly_name: Bamboo Irrigation
   icon: mdi:water
-  emulated_hue: false
+  emulated_hue: true
 switch.kelvinator_air_conditioner:
   friendly_name: Air Conditioner
   icon: mdi:air-conditioner
@@ -85,5 +85,3 @@ sensor.cat_room_light_switch:
   icon: mdi:power
 input_slider.irrigation_run_time:
   icon: mdi:clock-end
-switch.irrigation_relay_2:
-  friendly_name: Bamboo Irrigation
