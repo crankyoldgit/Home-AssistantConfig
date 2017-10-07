@@ -88,25 +88,25 @@ switch:
     retain: false
   - platform: mqtt
     name: stereo_power
-    command_topic: "ir_livingroom/commands/sendSherwood"
-    payload_on: "C1A28877"
-    payload_off: "C1A2B847"
+    command_topic: "ir_server/send"
+    payload_on: "19,C1A28877"
+    payload_off: "19,C1A2B847"
     optimistic: true
     qos: 0
     retain: false
   - platform: mqtt
     name: "Samsung TV"
-    command_topic: "ir_livingroom/commands/sendSamsung"
-    payload_on: "E0E09966"
-    payload_off: "E0E019E6"
+    command_topic: "ir_server/send"
+    payload_on: "7,E0E09966"
+    payload_off: "7,E0E019E6"
     optimistic: true
     qos: 0
     retain: false
   - platform: mqtt
     name: stereo_volume
-    command_topic: "ir_livingroom/commands/sendSherwoodRpt"
-    payload_on: "C1A2E21D,8"
-    payload_off: "C1A2D22D,8"
+    command_topic: "ir_server/send"
+    payload_on: "19,C1A2E21D,0,8"
+    payload_off: "19,C1A2D22D,0,8"
     optimistic: true
     qos: 0
     retain: false
@@ -137,9 +137,9 @@ switch:
   #   retain: false
   - platform: mqtt
     name: "Kelvinator Air Conditioner"
-    command_topic: "ir_livingroom/commands/sendKelvinator"
-    payload_on: "0x190B8050000000E0190B8070000010f0"
-    payload_off: "0x110B805000000060110B807000001070"
+    command_topic: "ir_server/send"
+    payload_on: "18,0x190B8050000000E0190B8070000010f0"
+    payload_off: "18,0x110B805000000060110B807000001070"
     optimistic: true
     qos: 0
     retain: false
