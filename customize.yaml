@@ -26,15 +26,15 @@ switch.Irrigation_Relay_1:
   icon: mdi:water
   emulated_hue: false
 switch.Irrigation_Relay_2:
-  friendly_name: Citrus Irrigation
+  friendly_name: Citrus Tap
   icon: mdi:water
   emulated_hue: true
 switch.Irrigation_Relay_3:
-  friendly_name: Side Path Irrigation
+  friendly_name: Side Path Tap
   icon: mdi:water
   emulated_hue: true
 switch.Irrigation_Relay_4:
-  friendly_name: Bamboo Irrigation
+  friendly_name: Bamboo Tap
   icon: mdi:water
   emulated_hue: true
 switch.kelvinator_air_conditioner:
@@ -85,3 +85,9 @@ sensor.cat_room_light_switch:
   icon: mdi:power
 input_slider.irrigation_run_time:
   icon: mdi:clock-end
+switch.irrigation_relay_2:
+  friendly_name: Citrus Tap
+switch.irrigation_relay_4:
+  friendly_name: Bamboo Tap
+switch.irrigation_relay_3:
+  friendly_name: Side Path Tap
