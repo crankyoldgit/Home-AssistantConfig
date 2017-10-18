@@ -56,7 +56,7 @@ turn_on_tv:
 irrigation_timer:
   alias: Irrigation Timer
   sequence:
-  - delay: 00:{{ states.input_slider.irrigation_run_time.state | int }}:00
+  - delay: 00:{{ states.input_number.irrigation_run_time.state | int }}:00
   - service: homeassistant.turn_off
     data:
       entity_id: group.irrigation

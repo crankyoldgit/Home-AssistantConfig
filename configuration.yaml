@@ -488,7 +488,7 @@ group:
     - sensor.cat_room_light_switch
     - switch.3D_Printer
   irrigation:
-    - input_slider.irrigation_run_time
+    - input_number.irrigation_run_time
     - switch.Irrigation_Relay_1
     - switch.Irrigation_Relay_2
     - switch.Irrigation_Relay_3
@@ -532,13 +532,14 @@ group:
 
 script: !include scripts.yaml
 
-input_slider:
+input_number:
   irrigation_run_time:
     name: Irrigation Run Time
-    initial: 10
+    initial: 20
     min: 1
     max: 60
     step: 1
+    mode: slider
 
 automation: !include automations.yaml
 
