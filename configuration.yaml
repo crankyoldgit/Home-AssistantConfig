@@ -76,6 +76,15 @@ mqtt:
     qos: 1
     retain: true
 
+google_assistant:
+  project_id: homeassistant-2341b
+  client_id: !secret ga_client_id
+  access_token: !secret ga_access_token
+  exposed_domains:
+    - switch
+    - light
+    - group
+
 switch:
   - platform: mqtt
     name: "Living room fan"
