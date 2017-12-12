@@ -5,12 +5,12 @@ switch.living_room_fan:
   google_assistant_type: switch
 switch.samsung_tv:
   icon: mdi:television
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 switch.stereo_power:
   friendly_name: Stereo
   icon: mdi:speaker
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 switch.stereo_volume:
   friendly_name: Stereo Volume
@@ -26,29 +26,29 @@ switch.sonoff_printer:
 switch.3D_Printer:
   friendly_name: 3D Printer
   icon: mdi:printer-3d
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 switch.Irrigation_Relay_1:
   friendly_name: Irrigation Relay 1 (Unused)
   icon: mdi:water
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 switch.Irrigation_Relay_2:
   friendly_name: Citrus Tap
   icon: mdi:water
-  emulated_hue: true
+  emulated_hue_hidden: false
   google_assistant: true
   google_assistant_type: switch
 switch.Irrigation_Relay_3:
   friendly_name: Side Path Tap
   icon: mdi:water
-  emulated_hue: true
+  emulated_hue_hidden: false
   google_assistant: true
   google_assistant_type: switch
 switch.Irrigation_Relay_4:
   friendly_name: Bamboo Tap
   icon: mdi:water
-  emulated_hue: true
+  emulated_hue_hidden: false
   google_assistant: true
   google_assistant_type: switch
 switch.kelvinator_air_conditioner:
@@ -77,7 +77,7 @@ group.tv_lights:
     - TV Lights
     - TV Light
 group.tv_power:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 group.Couch_lights:
   friendly_name: Couch Lights
@@ -97,28 +97,28 @@ group.main_bedroom:
   friendly_name: Bedroom
   google_assistant: false
 light.living_room_lights_warm_1:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.living_room_lights_warm_2:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.Living_Room_Lights_Cold_1:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.Living_Room_Lights_Cold_2:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.Living_Room_Lights_Cold_3:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.Living_Room_Lights_Cold_4:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.Living_Room_Lights_Cold_5:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.Living_Room_Lights_Cold_6:
-  emulated_hue: false
+  emulated_hue_hidden: true
   google_assistant: false
 light.Main_Bedroom_Downlight:
   friendly_name: Bedroom Light

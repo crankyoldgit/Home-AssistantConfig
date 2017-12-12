@@ -416,7 +416,6 @@ sensor:
       hours: 18
 
 emulated_hue:
-  type: google_home
   listen_port: 80
 
 group:
