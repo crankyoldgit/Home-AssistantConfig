@@ -61,6 +61,7 @@ group.kitchen_lights:
   google_assistant: false
 group.living_room:
   friendly_name: Living Room
+  google_assistant: false
 group.living_room_lights_warm:
   friendly_name: Living Room Lights
   google_assistant: true
