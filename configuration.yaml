@@ -544,9 +544,9 @@ script: !include scripts.yaml
 input_number:
   irrigation_run_time:
     name: Irrigation Run Time
-    initial: 20
+    initial: 7
     min: 1
-    max: 60
+    max: 30
     step: 1
     mode: slider
 
