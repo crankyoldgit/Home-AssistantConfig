@@ -40,6 +40,9 @@
   - below: 0.5
     condition: numeric_state
     entity_id: sensor.irrigation_1_on_time_today
+  - weekday:
+    - sat
+    condition: time
   action:
   - data: {}
     entity_id: switch.irrigation_relay_1
@@ -56,6 +59,9 @@
   - below: 2
     condition: numeric_state
     entity_id: sensor.bom_rain_today
+  - weekday:
+    - sat
+    condition: time
   action:
   - entity_id: switch.irrigation_relay_2
     service: homeassistant.turn_on
@@ -72,6 +78,9 @@
   - below: '2'
     condition: numeric_state
     entity_id: sensor.bom_rain_today
+  - weekday:
+    - sat
+    condition: time
   id: '1505470970293'
   trigger:
   - at: '21:00:00'
@@ -88,7 +97,30 @@
   - below: '2'
     condition: numeric_state
     entity_id: sensor.bom_rain_today
+  - weekday:
+    - sat
+    condition: time
   id: '1505475104245'
   trigger:
   - at: '21:30:00'
     platform: time
+- action:
+  - service: timer.start
+    entity_id: timer.front_garden
+  alias: Turn Front Garden Irrigation On
+  id: 'Timerstart_frontgarden'
+  trigger: 
+    platform: state
+    entity_id: switch.irrigation_relay_5
+    to: 'on'
+- action:
+  - service: homeassistant.turn_off
+    data:
+      entity_id: switch.irrigation_relay_5
+  alias: Timerstop
+  id: 'Timerstop_frontgarden'
+  trigger: 
+    platform: event
+    event_type: timer.finished
+    event_data: 
+      entity_id: timer.front_garden

@@ -198,6 +198,42 @@ switch:
     optimistic: false
     qos: 0
     retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 5"
+    state_topic: "stat/irrigation_1/POWER1"
+    command_topic: "cmnd/irrigation_1/POWER1"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 6"
+    state_topic: "stat/irrigation_1/POWER2"
+    command_topic: "cmnd/irrigation_1/POWER2"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 7"
+    state_topic: "stat/irrigation_1/POWER3"
+    command_topic: "cmnd/irrigation_1/POWER3"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
+  - platform: mqtt
+    name: "Irrigation Relay 8"
+    state_topic: "stat/irrigation_1/POWER4"
+    command_topic: "cmnd/irrigation_1/POWER4"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: false
 
 light:
   - platform: mqtt
@@ -544,7 +580,7 @@ script: !include scripts.yaml
 input_number:
   irrigation_run_time:
     name: Irrigation Run Time
-    initial: 7
+    initial: 10
     min: 1
     max: 30
     step: 1
@@ -561,3 +597,7 @@ automation: !include automations.yaml
 #    action:
 #      service: light.turn_off
 #      entity_id: group.upstairs
+
+timer:
+  front_garden:
+    duration: '00:01:00'
