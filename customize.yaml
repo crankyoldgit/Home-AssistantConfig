@@ -51,6 +51,28 @@ switch.Irrigation_Relay_4:
   emulated_hue_hidden: false
   google_assistant: true
   google_assistant_type: switch
+switch.Irrigation_Relay_5:
+  friendly_name: Front Garden Tap
+  icon: mdi:water
+  emulated_hue_hidden: false
+  google_assistant: true
+  google_assistant_type: switch
+switch.Irrigation_Relay_6:
+  friendly_name: Carport Tap
+  icon: mdi:water
+  emulated_hue_hidden: false
+  google_assistant: true
+  google_assistant_type: switch
+switch.Irrigation_Relay_7:
+  friendly_name: Irrigation Relay 7 (Unused)
+  icon: mdi:water
+  emulated_hue_hidden: true
+  google_assistant: false
+switch.Irrigation_Relay_8:
+  friendly_name: Irrigation Relay 8 (Unused)
+  icon: mdi:water
+  emulated_hue_hidden: true
+  google_assistant: false
 switch.kelvinator_air_conditioner:
   friendly_name: Air Conditioner
   icon: mdi:air-conditioner
@@ -130,5 +152,9 @@ light.cat_room_downlight:
 sensor.cat_room_light_switch:
   friendly_name: Cat Room Light Switch
   icon: mdi:power
-input_slider.irrigation_run_time:
+input_number.irrigation_run_time:
+  icon: mdi:clock-end
+input_number.front_garden_run_time:
+  icon: mdi:clock-end
+input_number.carport_tap_run_time:
   icon: mdi:clock-end

@@ -105,8 +105,26 @@
   - at: '21:30:00'
     platform: time
 - action:
+  - data: {}
+    entity_id: switch.irrigation_relay_5
+    service: homeassistant.turn_on
+  alias: 'Irrigation: Relay 5 Daily start'
+  condition:
+  - above: '40'
+    condition: numeric_state
+    entity_id: sensor.hours_of_no_rain_in_last_3_days
+  - below: '2'
+    condition: numeric_state
+    entity_id: sensor.bom_rain_today
+  id: '1505475104246'
+  trigger:
+  - at: '19:00:00'
+    platform: time
+- action:
   - service: timer.start
-    entity_id: timer.front_garden
+    data_template:
+      entity_id: timer.front_garden
+      duration: 00:{{ states.input_number.front_garden_run_time.state | int }}:00
   alias: Turn Front Garden Irrigation On
   id: 'Timerstart_frontgarden'
   trigger: 
@@ -124,3 +142,25 @@
     event_type: timer.finished
     event_data: 
       entity_id: timer.front_garden
+- action:
+  - service: timer.start
+    data_template:
+      entity_id: timer.carport_tap
+      duration: 00:{{ states.input_number.carport_tap_run_time.state | int }}:00
+  alias: Turn Carport Garden Irrigation On
+  id: 'Timerstart_carport_garden'
+  trigger: 
+    platform: state
+    entity_id: switch.irrigation_relay_6
+    to: 'on'
+- action:
+  - service: homeassistant.turn_off
+    data:
+      entity_id: switch.irrigation_relay_6
+  alias: Timerstop
+  id: 'Timerstop_carport_garden'
+  trigger: 
+    platform: event
+    event_type: timer.finished
+    event_data: 
+      entity_id: timer.carport_tap

@@ -86,6 +86,9 @@ google_assistant:
     - light
     - group
 
+#recorder:
+#  purge_keep_days: 180
+
 switch:
   - platform: mqtt
     name: "Living room fan"
@@ -450,6 +453,38 @@ sensor:
     end: '{{ now() }}'
     duration:
       hours: 18
+  - platform: history_stats
+    name: Irrigation_5_on_time_18h
+    entity_id: switch.Irrigation_Relay_5
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_6_on_time_18h
+    entity_id: switch.Irrigation_Relay_6
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_7_on_time_18h
+    entity_id: switch.Irrigation_Relay_7
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_8_on_time_18h
+    entity_id: switch.Irrigation_Relay_8
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
 
 emulated_hue:
   listen_port: 80
@@ -481,6 +516,8 @@ group:
     name: Garden
     entities:
       - group.irrigation
+      - group.front_garden
+      - group.carport_garden
   environment_view:
     view: yes
     name: Environment
@@ -532,12 +569,28 @@ group:
     - light.cat_room_downlight
     - sensor.cat_room_light_switch
     - switch.3D_Printer
+  front_garden:
+    name: Front Garden
+    entities:
+      - input_number.front_garden_run_time
+      - sensor.Irrigation_5_on_time_18h
+      - timer.front_garden
+      - switch.Irrigation_Relay_5
+  carport_garden:
+    name: Carport Garden
+    entities:
+      - input_number.carport_tap_run_time
+      - sensor.Irrigation_6_on_time_18h
+      - timer.carport_tap
+      - switch.Irrigation_Relay_6
   irrigation:
     - input_number.irrigation_run_time
     - switch.Irrigation_Relay_1
     - switch.Irrigation_Relay_2
     - switch.Irrigation_Relay_3
     - switch.Irrigation_Relay_4
+    - switch.Irrigation_Relay_7
+    - switch.Irrigation_Relay_8
   environment:
     - sun.sun
     - sensor.bom_wmo
@@ -585,6 +638,20 @@ input_number:
     max: 30
     step: 1
     mode: slider
+  front_garden_run_time:
+    name: Front Garden Irrigation Run Time
+    initial: 3
+    min: 1
+    max: 15
+    step: 1
+    mode: slider
+  carport_tap_run_time:
+    name: Carport Irrigation Run Time
+    initial: 1
+    min: 1
+    max: 15
+    step: 1
+    mode: slider
 
 automation: !include automations.yaml
 
@@ -600,4 +667,6 @@ automation: !include automations.yaml
 
 timer:
   front_garden:
-    duration: '00:01:00'
+    name: Front Garden timer
+  carport_tap:
+    name: Carport Tap timer
