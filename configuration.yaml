@@ -86,8 +86,8 @@ google_assistant:
     - light
     - group
 
-#recorder:
-#  purge_keep_days: 180
+recorder:
+  purge_keep_days: 180
 
 switch:
   - platform: mqtt
@@ -209,7 +209,7 @@ switch:
     payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
   - platform: mqtt
     name: "Irrigation Relay 6"
     state_topic: "stat/irrigation_1/POWER2"
@@ -218,7 +218,7 @@ switch:
     payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
   - platform: mqtt
     name: "Irrigation Relay 7"
     state_topic: "stat/irrigation_1/POWER3"
@@ -227,7 +227,7 @@ switch:
     payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
   - platform: mqtt
     name: "Irrigation Relay 8"
     state_topic: "stat/irrigation_1/POWER4"
@@ -236,7 +236,7 @@ switch:
     payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
 
 light:
   - platform: mqtt
@@ -535,7 +535,7 @@ group:
     - switch.samsung_tv
     - switch.stereo_power
   living_room_lights_warm:
-    - light.living_room_lights_warm_1
+  #  - light.living_room_lights_warm_1  # Temp disabled till bulb is fixed.
     - light.living_room_lights_warm_2
   doorway_lights:
     - light.Living_Room_Lights_Cold_1
