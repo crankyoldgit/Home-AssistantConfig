@@ -167,40 +167,40 @@ switch:
     retain: false
   - platform: mqtt
     name: "Irrigation Relay 1"
-    state_topic: "easyesp/irrigation/Relay1/Switch"
-    command_topic: "easyesp/irrigation/gpio/14"
-    payload_on: "0"
-    payload_off: "1"
+    state_topic: "stat/irrigation_0/POWER1"
+    command_topic: "cmnd/irrigation_0/POWER1"
+    payload_on: "ON"
+    payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
   - platform: mqtt
     name: "Irrigation Relay 2"
-    state_topic: "easyesp/irrigation/Relay2/Switch"
-    command_topic: "easyesp/irrigation/gpio/12"
-    payload_on: "0"
-    payload_off: "1"
+    state_topic: "stat/irrigation_0/POWER2"
+    command_topic: "cmnd/irrigation_0/POWER2"
+    payload_on: "ON"
+    payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
   - platform: mqtt
     name: "Irrigation Relay 3"
-    state_topic: "easyesp/irrigation/Relay3/Switch"
-    command_topic: "easyesp/irrigation/gpio/13"
-    payload_on: "0"
-    payload_off: "1"
+    state_topic: "stat/irrigation_0/POWER3"
+    command_topic: "cmnd/irrigation_0/POWER3"
+    payload_on: "ON"
+    payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
   - platform: mqtt
     name: "Irrigation Relay 4"
-    state_topic: "easyesp/irrigation/Relay4/Switch"
-    command_topic: "easyesp/irrigation/gpio/0"
-    payload_on: "0"
-    payload_off: "1"
+    state_topic: "stat/irrigation_0/POWER4"
+    command_topic: "cmnd/irrigation_0/POWER4"
+    payload_on: "ON"
+    payload_off: "OFF"
     optimistic: false
     qos: 0
-    retain: false
+    retain: true
   - platform: mqtt
     name: "Irrigation Relay 5"
     state_topic: "stat/irrigation_1/POWER1"
@@ -518,6 +518,7 @@ group:
       - group.irrigation
       - group.front_garden
       - group.carport_garden
+      - group.back_garden
   environment_view:
     view: yes
     name: Environment
@@ -583,6 +584,22 @@ group:
       - sensor.Irrigation_6_on_time_18h
       - timer.carport_tap
       - switch.Irrigation_Relay_6
+  back_garden:
+    name: Back Garden
+    entities:
+      - input_number.bamboo_tap_run_time
+      - sensor.Irrigation_4_on_time_18h
+      - timer.bamboo_tap
+      - switch.Irrigation_Relay_4
+      - input_number.side_path_tap_run_time
+      - sensor.Irrigation_3_on_time_18h
+      - timer.side_path_tap
+      - switch.Irrigation_Relay_3
+      - input_number.citrus_tap_run_time
+      - sensor.Irrigation_2_on_time_18h
+      - timer.citrus_tap
+      - switch.Irrigation_Relay_2
+
   irrigation:
     - input_number.irrigation_run_time
     - switch.Irrigation_Relay_1
@@ -638,6 +655,27 @@ input_number:
     max: 30
     step: 1
     mode: slider
+  bamboo_tap_run_time:
+    name: Bamboo Tap Run Time
+    initial: 10
+    min: 1
+    max: 30
+    step: 1
+    mode: slider
+  citrus_tap_run_time:
+    name: Citrus Tap Run Time
+    initial: 10
+    min: 1
+    max: 30
+    step: 1
+    mode: slider
+  side_path_tap_run_time:
+    name: Side Path Tap Run Time
+    initial: 10
+    min: 1
+    max: 30
+    step: 1
+    mode: slider
   front_garden_run_time:
     name: Front Garden Irrigation Run Time
     initial: 3
@@ -670,3 +708,9 @@ timer:
     name: Front Garden timer
   carport_tap:
     name: Carport Tap timer
+  bamboo_tap:
+    name: Bamboo Tap timer
+  citrus_tap:
+    name: Citrus Tap timer
+  side_path_tap:
+    name: Side Path Tap timer

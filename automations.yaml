@@ -7,24 +7,6 @@
   action:
   - service: light.turn_off
     entity_id: group.upstairs
-- id: irrigation_auto_turn_off
-  alias: 'Irrigation: Automatically turn off'
-  trigger:
-  - platform: state
-    entity_id: group.irrigation
-    to: 'on'
-  action:
-  - service: script.turn_on
-    entity_id: script.irrigation_timer
-- id: irrigation_reset_timer
-  alias: 'Irrigation: reset timer'
-  trigger:
-  - platform: state
-    entity_id: group.irrigation
-    to: 'off'
-  action:
-  - service: script.turn_off
-    entity_id: script.irrigation_timer
 - id: irrigation_1_daily_start
   alias: 'Irrigation: Relay 1 Daily start'
   trigger:
@@ -48,7 +30,7 @@
     entity_id: switch.irrigation_relay_1
     service: homeassistant.turn_on
 - id: irrigation_2_daily_start
-  alias: 'Irrigation: Relay 2 Daily start'
+  alias: 'Irrigation: Relay 2 Daily start (Citrus)'
   trigger:
   - at: '20:30:00'
     platform: time
@@ -70,7 +52,7 @@
     data: {}
     entity_id: switch.irrigation_relay_3
     service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 3 Daily start'
+  alias: 'Irrigation: Relay 3 Daily start (Side Path)'
   condition:
   - above: '48'
     condition: numeric_state
@@ -89,7 +71,7 @@
   - data: {}
     entity_id: switch.irrigation_relay_4
     service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 4 Daily start'
+  alias: 'Irrigation: Relay 4 Daily start (Bamboo)'
   condition:
   - above: '48'
     condition: numeric_state
@@ -106,9 +88,41 @@
     platform: time
 - action:
   - data: {}
+    entity_id: switch.irrigation_relay_4
+    service: homeassistant.turn_on
+  alias: 'Irrigation: Relay 4 Daily start (Daily Morning Bamboo)'
+  condition:
+  - above: '40'
+    condition: numeric_state
+    entity_id: sensor.hours_of_no_rain_in_last_3_days
+  - below: '2'
+    condition: numeric_state
+    entity_id: sensor.bom_rain_today
+  id: '1505475104250'
+  trigger:
+  - at: '6:03:00'
+    platform: time
+- action:
+  - data: {}
+    entity_id: switch.irrigation_relay_2
+    service: homeassistant.turn_on
+  alias: 'Irrigation: Relay 2 Daily start (Daily Morning Citrus)'
+  condition:
+  - above: '40'
+    condition: numeric_state
+    entity_id: sensor.hours_of_no_rain_in_last_3_days
+  - below: '2'
+    condition: numeric_state
+    entity_id: sensor.bom_rain_today
+  id: '1505475104251'
+  trigger:
+  - at: '6:03:00'
+    platform: time
+- action:
+  - data: {}
     entity_id: switch.irrigation_relay_5
     service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 5 Daily start'
+  alias: 'Irrigation: Relay 5 Daily start (Front Garden)'
   condition:
   - above: '40'
     condition: numeric_state
@@ -127,7 +141,7 @@
       duration: 00:{{ states.input_number.front_garden_run_time.state | int }}:00
   alias: Turn Front Garden Irrigation On
   id: 'Timerstart_frontgarden'
-  trigger: 
+  trigger:
     platform: state
     entity_id: switch.irrigation_relay_5
     to: 'on'
@@ -137,7 +151,7 @@
       entity_id: switch.irrigation_relay_5
   alias: Timerstop
   id: 'Timerstop_frontgarden'
-  trigger: 
+  trigger:
     platform: event
     event_type: timer.finished
     event_data: 
@@ -149,7 +163,7 @@
       duration: 00:{{ states.input_number.carport_tap_run_time.state | int }}:00
   alias: Turn Carport Garden Irrigation On
   id: 'Timerstart_carport_garden'
-  trigger: 
+  trigger:
     platform: state
     entity_id: switch.irrigation_relay_6
     to: 'on'
@@ -159,8 +173,68 @@
       entity_id: switch.irrigation_relay_6
   alias: Timerstop
   id: 'Timerstop_carport_garden'
-  trigger: 
+  trigger:
     platform: event
     event_type: timer.finished
     event_data: 
       entity_id: timer.carport_tap
+- action:
+  - service: timer.start
+    data_template:
+      entity_id: timer.bamboo_tap
+      duration: 00:{{ states.input_number.bamboo_tap_run_time.state | int }}:00
+  alias: Turn Bamboo Irrigation On
+  id: 'Timerstart_bamboo_tap'
+  trigger:
+    platform: state
+    entity_id: switch.irrigation_relay_4
+    to: 'on'
+- action:
+  - service: homeassistant.turn_off
+    data:
+      entity_id: switch.irrigation_relay_4
+  alias: Timerstop
+  id: 'Timerstop_bamboo_tap'
+  trigger:
+    platform: event
+    event_type: timer.finished
+- action:
+  - service: timer.start
+    data_template:
+      entity_id: timer.citrus_tap
+      duration: 00:{{ states.input_number.citrus_tap_run_time.state | int }}:00
+  alias: Turn Citrus Irrigation On
+  id: 'Timerstart_citrus_tap'
+  trigger:
+    platform: state
+    entity_id: switch.irrigation_relay_2
+    to: 'on'
+- action:
+  - service: homeassistant.turn_off
+    data:
+      entity_id: switch.irrigation_relay_2
+  alias: Timerstop
+  id: 'Timerstop_citrus_tap'
+  trigger:
+    platform: event
+    event_type: timer.finished
+- action:
+  - service: timer.start
+    data_template:
+      entity_id: timer.side_path_tap
+      duration: 00:{{ states.input_number.side_path_tap_run_time.state | int }}:00
+  alias: Turn Side Path Irrigation On
+  id: 'Timerstart_side_path_tap'
+  trigger:
+    platform: state
+    entity_id: switch.irrigation_relay_3
+    to: 'on'
+- action:
+  - service: homeassistant.turn_off
+    data:
+      entity_id: switch.irrigation_relay_3
+  alias: Timerstop
+  id: 'Timerstop_side_path_tap'
+  trigger:
+    platform: event
+    event_type: timer.finished
