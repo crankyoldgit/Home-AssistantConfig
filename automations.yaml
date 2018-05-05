@@ -149,12 +149,12 @@
   - service: homeassistant.turn_off
     data:
       entity_id: switch.irrigation_relay_5
-  alias: Timerstop
+  alias: Front Garden Timerstop
   id: 'Timerstop_frontgarden'
   trigger:
     platform: event
     event_type: timer.finished
-    event_data: 
+    event_data:
       entity_id: timer.front_garden
 - action:
   - service: timer.start
@@ -171,12 +171,12 @@
   - service: homeassistant.turn_off
     data:
       entity_id: switch.irrigation_relay_6
-  alias: Timerstop
+  alias: Carport Garden Timerstop
   id: 'Timerstop_carport_garden'
   trigger:
     platform: event
     event_type: timer.finished
-    event_data: 
+    event_data:
       entity_id: timer.carport_tap
 - action:
   - service: timer.start
@@ -193,11 +193,13 @@
   - service: homeassistant.turn_off
     data:
       entity_id: switch.irrigation_relay_4
-  alias: Timerstop
+  alias: Bamboo Tap Timerstop
   id: 'Timerstop_bamboo_tap'
   trigger:
     platform: event
     event_type: timer.finished
+    event_data:
+      entity_id: timer.bamboo_tap
 - action:
   - service: timer.start
     data_template:
@@ -213,11 +215,13 @@
   - service: homeassistant.turn_off
     data:
       entity_id: switch.irrigation_relay_2
-  alias: Timerstop
+  alias: Citrus Tap Timerstop
   id: 'Timerstop_citrus_tap'
   trigger:
     platform: event
     event_type: timer.finished
+    event_data:
+      entity_id: timer.citrus_tap
 - action:
   - service: timer.start
     data_template:
@@ -233,8 +237,10 @@
   - service: homeassistant.turn_off
     data:
       entity_id: switch.irrigation_relay_3
-  alias: Timerstop
+  alias: Side Path Timerstop
   id: 'Timerstop_side_path_tap'
   trigger:
     platform: event
     event_type: timer.finished
+    event_data:
+      entity_id: timer.side_path_tap
