@@ -120,7 +120,7 @@
       entity_id: timer.front_garden
       duration: 00:{{ states.input_number.front_garden_run_time.state | int }}:00
   alias: Turn Front Garden Irrigation On
-  id: 'Timerstart_frontgarden'
+  id: Timerstart_frontgarden
   trigger:
     platform: state
     entity_id: switch.irrigation_relay_5
@@ -130,7 +130,7 @@
     data:
       entity_id: switch.irrigation_relay_5
   alias: Front Garden Timerstop
-  id: 'Timerstop_frontgarden'
+  id: Timerstop_frontgarden
   trigger:
     platform: event
     event_type: timer.finished
@@ -142,7 +142,7 @@
       entity_id: timer.carport_tap
       duration: 00:{{ states.input_number.carport_tap_run_time.state | int }}:00
   alias: Turn Carport Garden Irrigation On
-  id: 'Timerstart_carport_garden'
+  id: Timerstart_carport_garden
   trigger:
     platform: state
     entity_id: switch.irrigation_relay_6
@@ -152,7 +152,7 @@
     data:
       entity_id: switch.irrigation_relay_6
   alias: Carport Garden Timerstop
-  id: 'Timerstop_carport_garden'
+  id: Timerstop_carport_garden
   trigger:
     platform: event
     event_type: timer.finished
@@ -164,7 +164,7 @@
       entity_id: timer.bamboo_tap
       duration: 00:{{ states.input_number.bamboo_tap_run_time.state | int }}:00
   alias: Turn Bamboo Irrigation On
-  id: 'Timerstart_bamboo_tap'
+  id: Timerstart_bamboo_tap
   trigger:
     platform: state
     entity_id: switch.irrigation_relay_2
@@ -174,7 +174,7 @@
     data:
       entity_id: switch.irrigation_relay_2
   alias: Bamboo Tap Timerstop
-  id: 'Timerstop_bamboo_tap'
+  id: Timerstop_bamboo_tap
   trigger:
     platform: event
     event_type: timer.finished
@@ -186,7 +186,7 @@
       entity_id: timer.citrus_tap
       duration: 00:{{ states.input_number.citrus_tap_run_time.state | int }}:00
   alias: Turn Citrus Irrigation On
-  id: 'Timerstart_citrus_tap'
+  id: Timerstart_citrus_tap
   trigger:
     platform: state
     entity_id: switch.irrigation_relay_4
@@ -196,7 +196,7 @@
     data:
       entity_id: switch.irrigation_relay_4
   alias: Citrus Tap Timerstop
-  id: 'Timerstop_citrus_tap'
+  id: Timerstop_citrus_tap
   trigger:
     platform: event
     event_type: timer.finished
@@ -208,7 +208,7 @@
       entity_id: timer.master_tap
       duration: 00:{{ states.input_number.master_tap_run_time.state | int }}:00
   alias: Turn Master Irrigation On
-  id: 'Timerstart_master_tap'
+  id: Timerstart_master_tap
   trigger:
     platform: state
     entity_id: switch.irrigation_relay_3
@@ -218,9 +218,29 @@
     data:
       entity_id: switch.irrigation_relay_3
   alias: Master Timerstop
-  id: 'Timerstop_master_tap'
+  id: Timerstop_master_tap
   trigger:
     platform: event
     event_type: timer.finished
     event_data:
       entity_id: timer.master_tap
+- action:
+  - service: homeassistant.turn_on
+    entity_id: switch.irrigation_relay_3
+  alias: Turn master solenoid on for Bamboo Tap
+  condition: []
+  id: '1537592826761'
+  trigger:
+  - entity_id: switch.irrigation_relay_2
+    platform: state
+    to: 'on'
+- action:
+  - service: homeassistant.turn_on
+    entity_id: switch.irrigation_relay_3
+  alias: Turn master solenoid on for Citrus Tap
+  condition: []
+  id: '1537592826762'
+  trigger:
+  - entity_id: switch.irrigation_relay_4
+    platform: state
+    to: 'on'

@@ -657,14 +657,14 @@ input_number:
     mode: slider
   bamboo_tap_run_time:
     name: Bamboo Tap Run Time
-    initial: 10
+    initial: 11
     min: 1
     max: 30
     step: 1
     mode: slider
   citrus_tap_run_time:
     name: Citrus Tap Run Time
-    initial: 10
+    initial: 11
     min: 1
     max: 30
     step: 1
