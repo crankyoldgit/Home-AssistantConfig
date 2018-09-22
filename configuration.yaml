@@ -588,17 +588,17 @@ group:
     name: Back Garden
     entities:
       - input_number.bamboo_tap_run_time
-      - sensor.Irrigation_4_on_time_18h
+      - sensor.Irrigation_2_on_time_18h
       - timer.bamboo_tap
-      - switch.Irrigation_Relay_4
-      - input_number.side_path_tap_run_time
+      - switch.Irrigation_Relay_2
+      - input_number.master_tap_run_time
       - sensor.Irrigation_3_on_time_18h
-      - timer.side_path_tap
+      - timer.master_tap
       - switch.Irrigation_Relay_3
       - input_number.citrus_tap_run_time
-      - sensor.Irrigation_2_on_time_18h
+      - sensor.Irrigation_4_on_time_18h
       - timer.citrus_tap
-      - switch.Irrigation_Relay_2
+      - switch.Irrigation_Relay_4
 
   irrigation:
     - input_number.irrigation_run_time
@@ -669,8 +669,8 @@ input_number:
     max: 30
     step: 1
     mode: slider
-  side_path_tap_run_time:
-    name: Side Path Tap Run Time
+  master_tap_run_time:
+    name: Master Tap Run Time
     initial: 10
     min: 1
     max: 30
@@ -712,5 +712,5 @@ timer:
     name: Bamboo Tap timer
   citrus_tap:
     name: Citrus Tap timer
-  side_path_tap:
-    name: Side Path Tap timer
+  master_tap:
+    name: Master Tap timer

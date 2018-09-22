@@ -34,19 +34,19 @@ switch.Irrigation_Relay_1:
   emulated_hue_hidden: true
   google_assistant: false
 switch.Irrigation_Relay_2:
-  friendly_name: Citrus Tap
+  friendly_name: Bamboo Tap
   icon: mdi:water
   emulated_hue_hidden: false
   google_assistant: true
   google_assistant_type: switch
 switch.Irrigation_Relay_3:
-  friendly_name: Side Path Tap
+  friendly_name: Master Tap
   icon: mdi:water
   emulated_hue_hidden: false
   google_assistant: true
   google_assistant_type: switch
 switch.Irrigation_Relay_4:
-  friendly_name: Bamboo Tap
+  friendly_name: Citrus Tap
   icon: mdi:water
   emulated_hue_hidden: false
   google_assistant: true
