@@ -29,8 +29,8 @@
   - data: {}
     entity_id: switch.irrigation_relay_1
     service: homeassistant.turn_on
-- id: irrigation_2_daily_start
-  alias: 'Irrigation: Relay 2 Daily start (Citrus)'
+- id: irrigation_4_daily_start
+  alias: 'Irrigation: Relay 4 Daily start (Citrus)'
   trigger:
   - at: '20:30:00'
     platform: time
@@ -48,30 +48,10 @@
   - entity_id: switch.irrigation_relay_4
     service: homeassistant.turn_on
 - action:
-  - alias: Turn Irrigation 3 on
-    data: {}
-    entity_id: switch.irrigation_relay_3
-    service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 3 Daily start (Master)'
-  condition:
-  - above: '48'
-    condition: numeric_state
-    entity_id: sensor.hours_of_no_rain_in_last_3_days
-  - below: '2'
-    condition: numeric_state
-    entity_id: sensor.bom_rain_today
-  - weekday:
-    - sat
-    condition: time
-  id: '1505470970293'
-  trigger:
-  - at: '21:00:00'
-    platform: time
-- action:
   - data: {}
     entity_id: switch.irrigation_relay_2
     service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 4 Daily start (Bamboo)'
+  alias: 'Irrigation: Relay 2 Daily start (Bamboo)'
   condition:
   - above: '48'
     condition: numeric_state
@@ -90,7 +70,7 @@
   - data: {}
     entity_id: switch.irrigation_relay_2
     service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 4 Daily start (Daily Morning Bamboo)'
+  alias: 'Irrigation: Relay 2 Daily start (Daily Morning Bamboo)'
   condition:
   - above: '40'
     condition: numeric_state
@@ -106,7 +86,7 @@
   - data: {}
     entity_id: switch.irrigation_relay_4
     service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 2 Daily start (Daily Morning Citrus)'
+  alias: 'Irrigation: Relay 4 Daily start (Daily Morning Citrus)'
   condition:
   - above: '40'
     condition: numeric_state
