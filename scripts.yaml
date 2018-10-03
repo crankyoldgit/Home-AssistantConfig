@@ -80,3 +80,13 @@ turn_on_citrus_irrigation:
   - alias: Turn on the back garden master solenoid
     entity_id: switch.irrigation_relay_3
     service: switch.turn_on
+turn_off_citrus_irrigation:
+  sequence:
+  - alias: Turn off the back garden master solenoid
+    entity_id: switch.irrigation_relay_3
+    service: switch.turn_off
+  - delay:
+      seconds: 20
+  - alias: Turn off the citrus solenoid
+    entity_id: switch.irrigation_relay_4
+    service: switch.turn_off
