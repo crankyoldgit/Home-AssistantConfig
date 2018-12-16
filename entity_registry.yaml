@@ -1,3 +1,0 @@
-switch.bedroom_main_downlight:
-  platform: wemo
-  unique_id: 201612K00959244
