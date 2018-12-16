@@ -10,28 +10,37 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Australia/Brisbane
-
-  # Include the customizations.
+  # Customization file
   customize: !include customize.yaml
 
-config:
-  
 # Show links to resources in log and frontend
 # introduction:
 
 # Enables the frontend
 frontend:
 
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret http_password
+  # api_password: !secret http_password
   # Uncomment this if you are using SSL or running in Docker etc
   base_url: !secret base_url
   ssl_certificate: !secret ssl_certificate
   ssl_key: !secret ssl_key
 
 # Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
 updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
 
 # Discover some devices automatically
 discovery:
@@ -39,25 +48,39 @@ discovery:
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-# Enables support for tracking state changes over time.
+# Enables support for tracking state changes over time
 history:
 
 # View all events in a logbook
 logbook:
 
+# Enables a map showing the location of tracked devices
+map:
+
 # Track the sun
 sun:
 
-# Weather Prediction
-# sensor:
-#   platform: yr
+# Sensors
+#sensor:
+  # Weather prediction
+#  - platform: yr
 
 # Text to speech
 tts:
-  platform: google
+  - platform: google
+
+# Cloud
+cloud:
+
+recorder:
+  purge_keep_days: 180
+
+# group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
 
 mqtt:
-  broker: 10.20.0.253
+  broker: 10.0.0.4
   port: 1883
   client_id: home-assistant-1
   keepalive: 60
@@ -75,19 +98,6 @@ mqtt:
     payload: 'offline'
     qos: 1
     retain: true
-
-google_assistant:
-  project_id: homeassistant-2341b
-  client_id: !secret ga_client_id
-  access_token: !secret ga_access_token
-  api_key: !secret ga_api_key
-  exposed_domains:
-    - switch
-    - light
-    - group
-
-recorder:
-  purge_keep_days: 180
 
 switch:
   - platform: mqtt
@@ -123,6 +133,7 @@ switch:
     optimistic: true
     qos: 0
     retain: false
+
   - platform: template
     switches:
       stereo:
@@ -404,7 +415,7 @@ sensor:
   # - platform: mqtt
   #   state_topic: "tele/bedroom_main_downlight/DS18B20/TEMPERATURE"
   #   name: "Bedroom Temperature"
-  #   unit_of_measure: '°C'
+  #   unit_of_measure: 'C'
   - platform: mqtt
     state_topic: "tele/cat_room_lights/SENSOR"
     name: cat_room_light_switch
@@ -485,9 +496,6 @@ sensor:
     end: '{{ now() }}'
     duration:
       hours: 18
-
-emulated_hue:
-  listen_port: 80
 
 group:
   ### Views
@@ -645,8 +653,6 @@ group:
     - sensor.bom_wind_speed_kmh
     - sensor.bom_wind_direction_kt
 
-script: !include scripts.yaml
-
 input_number:
   irrigation_run_time:
     name: Irrigation Run Time
@@ -691,18 +697,6 @@ input_number:
     step: 1
     mode: slider
 
-automation: !include automations.yaml
-
-#automation old:
-#  - alias: Turn off lights before sun rises
-#    trigger:
-#      platform: sun
-#      event: sunrise
-#      offset: "+00:30:00"
-#    action:
-#      service: light.turn_off
-#      entity_id: group.upstairs
-
 timer:
   front_garden:
     name: Front Garden timer
@@ -714,3 +708,131 @@ timer:
     name: Citrus Tap timer
   master_tap:
     name: Master Tap timer
+
+google_assistant:
+  project_id: home-assistant-adc92
+  api_key: !secret ga_api_key
+  expose_by_default: false
+  entity_config:
+    # Living Room
+    group.living_room_lights_warm:
+      name: Warm Lights
+      aliases:
+        - Usual Lights
+        - Warm Lights
+        - Dim Lights
+        - Low Lights
+      room: Living Room
+      expose: true
+    group.bright_living_room_lights:
+      name: Bright Lights
+      aliases:
+        - Bright Lights
+        - Cold Lights
+      room: Living Room
+      expose: true
+    group.doorway_lights:
+      name: Doorway Lights
+      aliases:
+        - Doorway Lights
+        - Door Lights
+      room: Living Room
+      expose: true
+    group.couch_lights:
+      name: Couch Lights
+      aliases:
+        - Couch Lights
+        - Middle Lights
+      room: Living Room
+      expose: true
+    group.tv_lights:
+      name: Fireplace Lights
+      aliases:
+        - Fireplace Lights
+        - Wall Lights
+        - TV Lights
+      room: Living Room
+      expose: true
+    switch.stereo:
+      name: Stereo
+      aliases:
+      room: Living Room
+      expose: true
+    switch.stereo_volume:
+      name: Stereo Volume
+      aliases:
+        - Stereo volume
+        - TV volume
+      room: Living Room
+      expose: true
+    switch.tv:
+      name: TV
+      aliases:
+        - Samsung TV
+        - Samsung Television
+        - Television
+      room: Living Room
+      expose: true
+    switch.kelvinator_air_conditioner:
+      name: Air Conditioner
+      aliases:
+        - Kelvinator Air Conditioner
+        - Air Con
+        - Air Conditioning
+      room: Living Room
+      expose: true
+    switch.living_room_fan:
+      name: Fan
+      room: Living Room
+      expose: true
+    # Kitchen
+    light.left_kitchen_lights:
+      name: Left Kitchen Light
+      room: Kitchen
+      expose: true
+    light.right_kitchen_lights:
+      name: Right Kitchen Light
+      room: Kitchen
+      expose: true
+    group.kitchen_lights:
+      expose: false
+    # Cat Room
+    light.cat_room_downlight:
+      name: Cat Room Light
+      room: Cat Room
+      expose: true
+    group.cat_room:
+      expose: false
+    # Bedroom
+    light.main_bedroom_downlight:
+      name: Bedroom Light
+      room: Bedroom
+      expose: true
+    # Backyard
+    switch.Irrigation_Relay_2:
+      name: Bamboo Tap
+      aliases:
+        - Bamboo Tap
+        - Bamboo
+        - Bamboo Irrigation
+      room: Backyard
+      expose: true
+    switch.Irrigation_Relay_4:
+      name: Vegepod Tap
+      aliases:
+        - Vegepod Tap
+        - Vegepod
+        - Vegepod Irrigation
+        - Vege Pod
+        - Vege Pod Tap
+        - Citrus Tap
+      room: Backyard
+      expose: true
+    # Garden
+    switch.Irrigation_Relay_5:
+      name: Front Garden Tap
+      aliases:
+        - Front Garden Tap
+        - Front Garden Irrigation
+      room: Garden
+      expose: true

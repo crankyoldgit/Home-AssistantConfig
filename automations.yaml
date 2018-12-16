@@ -243,3 +243,12 @@
   - entity_id: switch.irrigation_relay_4
     platform: state
     to: 'on'
+- id: letsencrypt-renewal
+  alias: "Let's Encrypt Renewal"
+  trigger:
+  - platform: time
+    at: '00:00:00'
+  action:
+  - service: hassio.addon_restart
+    data:
+      addon: core_letsencrypt
