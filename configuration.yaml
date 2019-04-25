@@ -163,14 +163,6 @@ switch:
   #   qos: 0
   #   retain: false
   - platform: mqtt
-    name: "Kelvinator Air Conditioner"
-    command_topic: "ir_server/send"
-    payload_on: "18,0x190B8050000000E0190B8070000010f0"
-    payload_off: "18,0x110B805000000060110B807000001070"
-    optimistic: true
-    qos: 0
-    retain: false
-  - platform: mqtt
     name: "3D Printer"
     state_topic: "stat/3d_printer_power/POWER"
     command_topic: "cmnd/3d_printer_power/POWER"
@@ -566,7 +558,6 @@ group:
     - switch.stereo_power
     - switch.stereo_volume
     - switch.living_room_fan
-    - switch.kelvinator_air_conditioner
     - group.living_room_lights_warm
     - group.bright_living_room_lights
     - media_player.living_room
@@ -824,14 +815,6 @@ google_assistant:
         - Television
       room: Living Room
       expose: true
-    #switch.kelvinator_air_conditioner:
-    #  name: Air Conditioner
-    #  aliases:
-    #    - Kelvinator Air Conditioner
-    #    - Air Con
-    #    - Air Conditioning
-    #  room: Living Room
-    #  expose: true
     switch.living_room_fan:
       name: Fan
       room: Living Room

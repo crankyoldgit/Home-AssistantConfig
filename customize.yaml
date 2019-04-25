@@ -73,11 +73,6 @@ switch.Irrigation_Relay_8:
   icon: mdi:water
   emulated_hue_hidden: true
   google_assistant: false
-switch.kelvinator_air_conditioner:
-  friendly_name: Air Conditioner
-  icon: mdi:air-conditioner
-  google_assistant: true
-  google_assistant_type: switch
 group.kitchen_lights:
   friendly_name: Kitchen Lights
   google_assistant: false
@@ -159,4 +154,4 @@ input_number.front_garden_run_time:
 input_number.carport_tap_run_time:
   icon: mdi:clock-end
 climate.living_room_aircon:
-  friendly_name: Climate
+  friendly_name: Air Conditioner
