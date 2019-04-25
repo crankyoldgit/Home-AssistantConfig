@@ -158,3 +158,5 @@ input_number.front_garden_run_time:
   icon: mdi:clock-end
 input_number.carport_tap_run_time:
   icon: mdi:clock-end
+climate.living_room_aircon:
+  friendly_name: Climate

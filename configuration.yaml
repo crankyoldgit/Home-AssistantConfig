@@ -68,6 +68,7 @@ sun:
 # Text to speech
 tts:
   - platform: google
+    base_url: !secret tts_url
 
 # Cloud
 cloud:
@@ -98,6 +99,8 @@ mqtt:
     payload: 'offline'
     qos: 1
     retain: true
+  discovery: true
+  discovery_prefix: homeassistant
 
 switch:
   - platform: mqtt
@@ -410,8 +413,7 @@ sensor:
       - icon
       - nearest_storm_distance
     units: auto
-    update_inverval:
-      minutes: 30
+
   # - platform: mqtt
   #   state_topic: "tele/bedroom_main_downlight/DS18B20/TEMPERATURE"
   #   name: "Bedroom Temperature"
@@ -568,6 +570,7 @@ group:
     - group.living_room_lights_warm
     - group.bright_living_room_lights
     - media_player.living_room
+    - climate.living_room_aircon
   main_bedroom:
     - light.Main_Bedroom_Downlight
     - sensor.bedroom_main_downlight_switch
@@ -709,12 +712,60 @@ timer:
   master_tap:
     name: Master Tap timer
 
+climate:
+  platform: mqtt
+  name: Living Room Aircon
+  modes:
+    - "off"
+    - "auto"
+    - "cool"
+    - "heat"
+    - "dry"
+    - "fan_only"
+  fan_modes:
+    - "auto"
+    - "min"
+    - "low"
+    - "medium"
+    - "high"
+    - "max"
+  swing_modes:
+    - "off"
+    - "auto"
+    - "highest"
+    - "high"
+    - "middle"
+    - "low"
+    - "lowest"
+  power_command_topic: "ir_server/ac/cmnd/power"
+  mode_command_topic: "ir_server/ac/cmnd/mode"
+  mode_state_topic: "ir_server/ac/stat/mode"
+  temperature_command_topic: "ir_server/ac/cmnd/temp"
+  temperature_state_topic: "ir_server/ac/stat/temp"
+  fan_mode_command_topic: "ir_server/ac/cmnd/fanspeed"
+  fan_mode_state_topic: "ir_server/ac/stat/fanspeed"
+  swing_mode_command_topic: "ir_server/ac/cmnd/swingv"
+  swing_mode_state_topic: "ir_server/ac/stat/swingv"
+  min_temp: 16
+  max_temp: 32
+  temp_step: 1
+  retain: false
+
 google_assistant:
   project_id: home-assistant-adc92
   api_key: !secret ga_api_key
   expose_by_default: false
   entity_config:
     # Living Room
+    climate.living_room_aircon:
+      name: Air Conditioner
+      aliases:
+        - Kelvinator Air Conditioner
+        - Air Con
+        - Air Conditioning
+        - Air Conditioner
+      room: Living Room
+      expose: true
     group.living_room_lights_warm:
       name: Warm Lights
       aliases:
@@ -773,14 +824,14 @@ google_assistant:
         - Television
       room: Living Room
       expose: true
-    switch.kelvinator_air_conditioner:
-      name: Air Conditioner
-      aliases:
-        - Kelvinator Air Conditioner
-        - Air Con
-        - Air Conditioning
-      room: Living Room
-      expose: true
+    #switch.kelvinator_air_conditioner:
+    #  name: Air Conditioner
+    #  aliases:
+    #    - Kelvinator Air Conditioner
+    #    - Air Con
+    #    - Air Conditioning
+    #  room: Living Room
+    #  expose: true
     switch.living_room_fan:
       name: Fan
       room: Living Room
