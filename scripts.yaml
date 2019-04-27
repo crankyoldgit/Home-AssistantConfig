@@ -43,7 +43,7 @@ turn_on_tv:
     service: mqtt.publish
   - alias: Turn up the Sherwood receiver volume by about 30.
     data:
-      payload: 19,C1A2E21D,0,25
+      payload: 19,C1A2E21D,0,30
       topic: ir_server/send
     service: mqtt.publish
   - delay:
