@@ -115,8 +115,8 @@ switch:
   - platform: mqtt
     name: stereo_power
     command_topic: "ir_server/send"
-    payload_on: "19,C1A28877"
-    payload_off: "19,C1A2B847"
+    payload_on: "3,7E817E81"
+    payload_off: "3,7E81FE01"
     optimistic: true
     qos: 0
     retain: false
@@ -126,15 +126,15 @@ switch:
     payload_on: "7,E0E09966"
     payload_off: "7,E0E019E6"
     optimistic: true
-    qos: 0
+    qos: 1
     retain: false
   - platform: mqtt
     name: stereo_volume
     command_topic: "ir_server/send"
-    payload_on: "19,C1A2E21D,0,8"
-    payload_off: "19,C1A2D22D,0,8"
+    payload_on: "3,5EA158A7,0,8"
+    payload_off: "3,5EA1D827,0,8"
     optimistic: true
-    qos: 0
+    qos: 1
     retain: false
 
   - platform: template
@@ -238,6 +238,15 @@ switch:
     name: "Irrigation Relay 8"
     state_topic: "stat/irrigation_1/POWER4"
     command_topic: "cmnd/irrigation_1/POWER4"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: true
+  - platform: mqtt
+    name: "Fountain"
+    command_topic: "cmnd/fountain/POWER"
+    state_topic: "stat/fountain/POWER"
     payload_on: "ON"
     payload_off: "OFF"
     optimistic: false
@@ -353,6 +362,7 @@ light:
     optimistic: false
     qos: 0
     retain: false
+
 
 sensor:
   - platform: bom
@@ -579,6 +589,7 @@ group:
       - sensor.Irrigation_5_on_time_18h
       - timer.front_garden
       - switch.Irrigation_Relay_5
+      - switch.fountain
   carport_garden:
     name: Carport Garden
     entities:
@@ -704,43 +715,43 @@ timer:
     name: Master Tap timer
 
 climate:
-  platform: mqtt
-  name: Living Room Aircon
-  modes:
-    - "off"
-    - "auto"
-    - "cool"
-    - "heat"
-    - "dry"
-    - "fan_only"
-  fan_modes:
-    - "auto"
-    - "min"
-    - "low"
-    - "medium"
-    - "high"
-    - "max"
-  swing_modes:
-    - "off"
-    - "auto"
-    - "highest"
-    - "high"
-    - "middle"
-    - "low"
-    - "lowest"
-  power_command_topic: "ir_server/ac/cmnd/power"
-  mode_command_topic: "ir_server/ac/cmnd/mode"
-  mode_state_topic: "ir_server/ac/stat/mode"
-  temperature_command_topic: "ir_server/ac/cmnd/temp"
-  temperature_state_topic: "ir_server/ac/stat/temp"
-  fan_mode_command_topic: "ir_server/ac/cmnd/fanspeed"
-  fan_mode_state_topic: "ir_server/ac/stat/fanspeed"
-  swing_mode_command_topic: "ir_server/ac/cmnd/swingv"
-  swing_mode_state_topic: "ir_server/ac/stat/swingv"
-  min_temp: 16
-  max_temp: 32
-  temp_step: 1
-  retain: false
+  - platform: mqtt
+    name: Living Room Aircon
+    modes:
+      - "off"
+      - "auto"
+      - "cool"
+      - "heat"
+      - "dry"
+      - "fan_only"
+    fan_modes:
+      - "auto"
+      - "min"
+      - "low"
+      - "medium"
+      - "high"
+      - "max"
+    swing_modes:
+      - "off"
+      - "auto"
+      - "highest"
+      - "high"
+      - "middle"
+      - "low"
+      - "lowest"
+    power_command_topic: "ir_server/ac/cmnd/power"
+    mode_command_topic: "ir_server/ac/cmnd/mode"
+    mode_state_topic: "ir_server/ac/stat/mode"
+    temperature_command_topic: "ir_server/ac/cmnd/temp"
+    temperature_state_topic: "ir_server/ac/stat/temp"
+    fan_mode_command_topic: "ir_server/ac/cmnd/fanspeed"
+    fan_mode_state_topic: "ir_server/ac/stat/fanspeed"
+    swing_mode_command_topic: "ir_server/ac/cmnd/swingv"
+    swing_mode_state_topic: "ir_server/ac/stat/swingv"
+    min_temp: 16
+    max_temp: 32
+    temp_step: 1
+    retain: false
 
 google_assistant:
   project_id: home-assistant-adc92
@@ -868,5 +879,13 @@ google_assistant:
       aliases:
         - Front Garden Tap
         - Front Garden Irrigation
+      room: Garden
+      expose: true
+    switch.fountain:
+      name: Fountain
+      aliases:
+        - Fountain
+        - Front Garden Fountain
+        - Front Door Fountain
       room: Garden
       expose: true

@@ -1,49 +1,42 @@
 turn_on_music:
   sequence:
-  - alias: Turn on the Sherwood receiver.
+  - alias: Turn on the Yamaha receiver.
     entity_id: switch.stereo_power
     service: switch.turn_on
   - delay:
       seconds: 2
-  - alias: Turn down the Sherwood receiver volume to about 0.
+  - alias: Recall Yamaha receiver Preset 1 volume. (30%)
     data:
-      payload: 19,C1A2D22D,0,40
+      payload: 3,7E81AE51
       topic: ir_server/send
     service: mqtt.publish
   - delay:
       seconds: 2
-  - alias: Switch the Sherwood receiver to Tape input.
+  - alias: Switch Yamaha receiver to AV2 input.
     data:
-      payload: 19,C1A2DA25
+      payload: 3,5EA16A94
       topic: ir_server/send
     service: mqtt.publish
-  - alias: Turn up the Sherwood receiver volume by about 6.
+  - alias: Recall Yamaha receiver Preset 2 volume. (13%)
     data:
-      payload: 19,C1A2E21D,0,5
+      payload: 3,7E816E91
       topic: ir_server/send
     service: mqtt.publish
 turn_on_tv:
   sequence:
-  - alias: Turn on Sherwood receiver and Samsung TV
+  - alias: Turn on Yamaha receiver and Samsung TV
     entity_id: group.tv_power
     service: switch.turn_on
   - delay:
       seconds: 2
-  - alias: Turn the Sherwood receiver volume down to about 0.
+  - alias: Switch Yamaha receiver to HDMI 2 Input via Scene 1.
     data:
-      payload: 19,C1A2D22D,0,40
+      payload: 3,5EA100FE
       topic: ir_server/send
     service: mqtt.publish
-  - delay:
-      seconds: 2
-  - alias: Switch Sherwood receiver to Video 2 Input
+  - alias: Recall Yamaha receiver Preset 1 volume.
     data:
-      payload: 19,C1A25AA5
-      topic: ir_server/send
-    service: mqtt.publish
-  - alias: Turn up the Sherwood receiver volume by about 30.
-    data:
-      payload: 19,C1A2E21D,0,30
+      payload: 3,7E81AE51
       topic: ir_server/send
     service: mqtt.publish
   - delay:
