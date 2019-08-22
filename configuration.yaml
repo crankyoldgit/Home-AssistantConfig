@@ -548,7 +548,7 @@ group:
     - switch.samsung_tv
     - switch.stereo_power
   living_room_lights_warm:
-  #  - light.living_room_lights_warm_1  # Temp disabled till bulb is fixed.
+    - light.living_room_lights_warm_1
     - light.living_room_lights_warm_2
   doorway_lights:
     - light.Living_Room_Lights_Cold_1
