@@ -54,6 +54,9 @@ history:
 # View all events in a logbook
 logbook:
 
+# System health
+system_health:
+
 # Enables a map showing the location of tracked devices
 map:
 
@@ -67,7 +70,8 @@ sun:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
     base_url: !secret tts_url
 
 # Cloud
@@ -725,20 +729,20 @@ climate:
       - "dry"
       - "fan_only"
     fan_modes:
-      - "auto"
-      - "min"
-      - "low"
-      - "medium"
-      - "high"
-      - "max"
+      - "Auto"
+      - "Min"
+      - "Low"
+      - "Medium"
+      - "High"
+      - "Max"
     swing_modes:
-      - "off"
-      - "auto"
-      - "highest"
-      - "high"
-      - "middle"
-      - "low"
-      - "lowest"
+      - "Off"
+      - "Auto"
+      - "Highest"
+      - "High"
+      - "Middle"
+      - "Low"
+      - "Lowest"
     power_command_topic: "ir_server/ac/cmnd/power"
     mode_command_topic: "ir_server/ac/cmnd/mode"
     mode_state_topic: "ir_server/ac/stat/mode"
