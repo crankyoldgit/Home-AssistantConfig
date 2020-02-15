@@ -77,6 +77,8 @@ tts:
 # Cloud
 cloud:
 
+mobile_app:
+
 recorder:
   purge_keep_days: 180
 
@@ -504,6 +506,48 @@ sensor:
     end: '{{ now() }}'
     duration:
       hours: 18
+#sensor sonoff_pow_watts:
+  - platform: mqtt
+    name: Warm Light 2 Current Power Usage
+    state_topic: "tele/livingroom_downlight_warm_2/SENSOR"
+    value_template: "{{value_json['ENERGY'].Power }}"
+    qos: 1
+    unit_of_measurement : "W"
+#sensor sonoff_pow_volts:
+  - platform: mqtt
+    name: Warm Light 2 Current Voltage
+    state_topic: "tele/livingroom_downlight_warm_2/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    qos: 1
+    unit_of_measurement : "V"
+#sensor sonoff_pow_current:
+  - platform: mqtt
+    name: Warm Light 2 Current Amps
+    state_topic: "tele/livingroom_downlight_warm_2/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current }}"
+    qos: 1
+    unit_of_measurement : "A"
+#sensor sonoff_pow_kwh_today:
+  - platform: mqtt
+    name: Warm Light 2 Todays Power
+    state_topic: "tele/livingroom_downlight_warm_2/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    qos: 1
+    unit_of_measurement : "kWh"
+#sensor sonoff_pow_kwh_yesterday:
+  - platform: mqtt
+    name: Warm Light 2 Yesterdays Power
+    state_topic: "tele/livingroom_downlight_warm_2/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Yesterday }}"
+    qos: 1
+    unit_of_measurement : "kWh"
+#sensor sonoff_pow_kwh_total:
+  - platform: mqtt
+    name: Warm Light 2 Total Power
+    state_topic: "tele/livingroom_downlight_warm_2/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    qos: 1
+    unit_of_measurement : "kWh"
 
 group:
   ### Views
@@ -554,6 +598,12 @@ group:
   living_room_lights_warm:
     - light.living_room_lights_warm_1
     - light.living_room_lights_warm_2
+    - sensor.warm_light_2_todays_power
+    - sensor.warm_light_2_current_amps
+    - sensor.warm_light_2_current_power_usage
+    - sensor.warm_light_2_current_voltage
+    - sensor.warm_light_2_total_power
+    - sensor.warm_light_2_yesterdays_power
   doorway_lights:
     - light.Living_Room_Lights_Cold_1
     - light.Living_Room_Lights_Cold_2
@@ -743,7 +793,7 @@ climate:
       - "Middle"
       - "Low"
       - "Lowest"
-    power_command_topic: "ir_server/ac/cmnd/power"
+    # power_command_topic: "ir_server/ac/cmnd/power"
     mode_command_topic: "ir_server/ac/cmnd/mode"
     mode_state_topic: "ir_server/ac/stat/mode"
     temperature_command_topic: "ir_server/ac/cmnd/temp"
@@ -756,6 +806,7 @@ climate:
     max_temp: 32
     temp_step: 1
     retain: false
+    send_if_off: false
 
 google_assistant:
   project_id: home-assistant-adc92
