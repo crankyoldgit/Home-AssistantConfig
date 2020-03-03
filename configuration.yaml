@@ -548,6 +548,50 @@ sensor:
     value_template: "{{ value_json['ENERGY'].Total }}"
     qos: 1
     unit_of_measurement : "kWh"
+#Left Kitchen Lights:
+  - platform: mqtt
+    name: Left Kitchen Lights Current Power Usage
+    state_topic: "tele/kitchen_lights_1/SENSOR"
+    value_template: "{{value_json['ENERGY'].Power }}"
+    qos: 1
+    unit_of_measurement : "W"
+  - platform: mqtt
+    name: Left Kitchen Lights Current Voltage
+    state_topic: "tele/kitchen_lights_1/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Voltage }}"
+    qos: 1
+    unit_of_measurement : "V"
+  - platform: mqtt
+    name: Left Kitchen Lights Current Amps
+    state_topic: "tele/kitchen_lights_1/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Current }}"
+    qos: 1
+    unit_of_measurement : "A"
+  - platform: mqtt
+    name: Left Kitchen Lights Todays Power
+    state_topic: "tele/kitchen_lights_1/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Today }}"
+    qos: 1
+    unit_of_measurement : "kWh"
+  - platform: mqtt
+    name: Left Kitchen Lights Yesterdays Power
+    state_topic: "tele/kitchen_lights_1/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Yesterday }}"
+    qos: 1
+    unit_of_measurement : "kWh"
+  - platform: mqtt
+    name: Left Kitchen Lights Total Power
+    state_topic: "tele/kitchen_lights_1/SENSOR"
+    value_template: "{{ value_json['ENERGY'].Total }}"
+    qos: 1
+    unit_of_measurement : "kWh"
+# Kitchen temp:
+  - platform: mqtt
+    name: Kitchen Temperature
+    state_topic: "tele/kitchen_lights_2/SENSOR"
+    value_template: "{{ value_json['DS18B20'].Temperature }}"
+    qos: 1
+    unit_of_measurement : "C"
 
 group:
   ### Views
@@ -587,10 +631,23 @@ group:
   ### Groups
   kitchen_lights:
     - light.left_kitchen_lights
+    - sensor.left_kitchen_lights_todays_power
+    - sensor.left_kitchen_lights_current_amps
+    - sensor.left_kitchen_lights_current_power_usage
+    - sensor.left_kitchen_lights_current_voltage
+    - sensor.left_kitchen_lights_total_power
+    - sensor.left_kitchen_lights_yesterdays_power
     - light.right_kitchen_lights
   kitchen:
     - light.left_kitchen_lights
     - light.right_kitchen_lights
+    - sensor.kitchen_temperature
+    - sensor.left_kitchen_lights_todays_power
+    - sensor.left_kitchen_lights_current_amps
+    - sensor.left_kitchen_lights_current_power_usage
+    - sensor.left_kitchen_lights_current_voltage
+    - sensor.left_kitchen_lights_total_power
+    - sensor.left_kitchen_lights_yesterdays_power
     # - switch.kettle
   tv_power:
     - switch.samsung_tv
@@ -798,6 +855,8 @@ climate:
     mode_state_topic: "ir_server/ac/stat/mode"
     temperature_command_topic: "ir_server/ac/cmnd/temp"
     temperature_state_topic: "ir_server/ac/stat/temp"
+    current_temperature_topic: "tele/kitchen_lights_2/SENSOR"
+    current_temperature_template: "{{ value_json['DS18B20'].Temperature }}"
     fan_mode_command_topic: "ir_server/ac/cmnd/fanspeed"
     fan_mode_state_topic: "ir_server/ac/stat/fanspeed"
     swing_mode_command_topic: "ir_server/ac/cmnd/swingv"
