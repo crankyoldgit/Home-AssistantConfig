@@ -1,20 +1,14 @@
 switch.living_room_fan:
   friendly_name: Fan
   icon: mdi:fan
-  google_assistant: true
-  google_assistant_type: switch
 switch.samsung_tv:
   icon: mdi:television
-  google_assistant: false
 switch.stereo_power:
   friendly_name: Stereo
   icon: mdi:speaker
-  google_assistant: false
 switch.stereo_volume:
   friendly_name: Stereo Volume
   icon: mdi:speaker
-  google_assistant: true
-  google_assistant_type: switch
 switch.kettle:
   friendly_name: Kettle
   icon: mdi:kettle
@@ -24,100 +18,56 @@ switch.sonoff_printer:
 switch.3D_Printer:
   friendly_name: 3D Printer
   icon: mdi:printer-3d
-  google_assistant: false
 switch.Irrigation_Relay_1:
   friendly_name: Irrigation Relay 1 (Unused)
   icon: mdi:water
-  google_assistant: false
 switch.Irrigation_Relay_2:
   friendly_name: Bamboo Tap
   icon: mdi:water
-  google_assistant: true
-  google_assistant_type: switch
 switch.Irrigation_Relay_3:
   friendly_name: Master Tap
   icon: mdi:water
-  google_assistant: true
-  google_assistant_type: switch
 switch.Irrigation_Relay_4:
   friendly_name: Citrus Tap
   icon: mdi:water
-  google_assistant: true
-  google_assistant_type: switch
 switch.Irrigation_Relay_5:
   friendly_name: Front Garden Tap
   icon: mdi:water
-  google_assistant: true
-  google_assistant_type: switch
 switch.Irrigation_Relay_6:
   friendly_name: Carport Tap
   icon: mdi:water
-  google_assistant: true
-  google_assistant_type: switch
 switch.Irrigation_Relay_7:
   friendly_name: Irrigation Relay 7 (Unused)
   icon: mdi:water
-  google_assistant: false
 switch.Irrigation_Relay_8:
   friendly_name: Irrigation Relay 8 (Unused)
   icon: mdi:water
-  google_assistant: false
 group.kitchen_lights:
   friendly_name: Kitchen Lights
-  google_assistant: false
 group.living_room:
   friendly_name: Living Room
-  google_assistant: false
 group.living_room_lights_warm:
   friendly_name: Living Room Lights
-  google_assistant: true
-  google_assistant_type: light
   aliases:
     - Warm Lights
     - Usual Lights
     - Low Lights
 group.tv_lights:
   friendly_name: Television Lights
-  google_assistant: true
-  google_assistant_type: light
   aliases:
     - TV Lights
     - TV Light
-group.tv_power:
-  google_assistant: false
 group.Couch_lights:
   friendly_name: Couch Lights
-  google_assistant: true
-  google_assistant_type: light
 group.doorway_lights:
   friendly_name: Doorway lights
-  google_assistant: true
-  google_assistant_type: light
   aliases:
     - Door Lights
     - Door Light
 group.cat_room:
   friendly_name: Cat Room
-  google_assistant: false
 group.main_bedroom:
   friendly_name: Bedroom
-  google_assistant: false
-light.living_room_lights_warm_1:
-  google_assistant: false
-light.living_room_lights_warm_2:
-  google_assistant: false
-light.Living_Room_Lights_Cold_1:
-  google_assistant: false
-light.Living_Room_Lights_Cold_2:
-  google_assistant: false
-light.Living_Room_Lights_Cold_3:
-  google_assistant: false
-light.Living_Room_Lights_Cold_4:
-  google_assistant: false
-light.Living_Room_Lights_Cold_5:
-  google_assistant: false
-light.Living_Room_Lights_Cold_6:
-  google_assistant: false
 light.Main_Bedroom_Downlight:
   friendly_name: Bedroom Light
 sensor.bedroom_main_downlight_switch:

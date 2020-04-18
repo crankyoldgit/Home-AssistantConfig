@@ -869,7 +869,7 @@ climate:
 google_assistant:
   project_id: home-assistant-adc92
   expose_by_default: false
-  report_state: true
+  # report_state: true
   entity_config:
     # Living Room
     climate.living_room_aircon:
