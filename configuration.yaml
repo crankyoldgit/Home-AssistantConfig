@@ -86,6 +86,13 @@ recorder:
 automation: !include automations.yaml
 script: !include scripts.yaml
 
+camera:
+  - platform: generic
+    name: Front Door Camera
+    still_image_url: "http://10.20.0.101/web/cgi-bin/hi3510/snap.cgi?&-getstream&-sna"
+    stream_source: rtsp://10.20.0.101/11
+    verify_ssl: false
+
 mqtt:
   broker: 10.0.0.4
   port: 1883
@@ -596,27 +603,22 @@ sensor:
 group:
   ### Views
   livingroom_view:
-    view: yes
     name: Living Room
     entities:
       group.living_room
   kitchen_view:
-    view: yes
     name: Kitchen
     entities:
       - group.kitchen
   cat_room_view:
-    view: yes
     name: Cat Room
     entities:
       - group.cat_room
   main_bedroom_view:
-    view: yes
     name: Bedroom
     entities:
       - group.main_bedroom
   garden_view:
-    view: yes
     name: Garden
     entities:
       - group.irrigation
@@ -624,7 +626,6 @@ group:
       - group.carport_garden
       - group.back_garden
   environment_view:
-    view: yes
     name: Environment
     entities:
       - group.environment
@@ -655,12 +656,12 @@ group:
   living_room_lights_warm:
     - light.living_room_lights_warm_1
     - light.living_room_lights_warm_2
-    - sensor.warm_light_2_todays_power
-    - sensor.warm_light_2_current_amps
-    - sensor.warm_light_2_current_power_usage
-    - sensor.warm_light_2_current_voltage
-    - sensor.warm_light_2_total_power
-    - sensor.warm_light_2_yesterdays_power
+    # - sensor.warm_light_2_todays_power
+    # - sensor.warm_light_2_current_amps
+    # - sensor.warm_light_2_current_power_usage
+    # - sensor.warm_light_2_current_voltage
+    # - sensor.warm_light_2_total_power
+    # - sensor.warm_light_2_yesterdays_power
   doorway_lights:
     - light.Living_Room_Lights_Cold_1
     - light.Living_Room_Lights_Cold_2
@@ -681,7 +682,6 @@ group:
     - switch.living_room_fan
     - group.living_room_lights_warm
     - group.bright_living_room_lights
-    - media_player.living_room
     - climate.living_room_aircon
   main_bedroom:
     - light.Main_Bedroom_Downlight
@@ -767,7 +767,6 @@ group:
     - sensor.bom_weather
     - sensor.bom_wind_direction
     - sensor.bom_wind_speed_kmh
-    - sensor.bom_wind_direction_kt
 
 input_number:
   irrigation_run_time:
@@ -869,8 +868,8 @@ climate:
 
 google_assistant:
   project_id: home-assistant-adc92
-  api_key: !secret ga_api_key
   expose_by_default: false
+  report_state: true
   entity_config:
     # Living Room
     climate.living_room_aircon:
