@@ -375,7 +375,31 @@ light:
     optimistic: false
     qos: 0
     retain: false
-
+  - platform: group
+    name: Warm Living Room Lights
+    entities:
+    - light.living_room_lights_warm_1
+    - light.living_room_lights_warm_2
+  - platform: group
+    name: Kitchen Lights
+    entities:
+    - light.left_kitchen_lights
+    - light.right_kitchen_lights
+  - platform: group
+    name: Doorway Lights
+    entities:
+    - light.Living_Room_Lights_Cold_1
+    - light.Living_Room_Lights_Cold_2
+  - platform: group
+    name: TV Lights
+    entities:
+    - light.Living_Room_Lights_Cold_4
+    - light.Living_Room_Lights_Cold_6
+  - platform: group
+    name: Couch Lights
+    entities:
+    - light.Living_Room_Lights_Cold_3
+    - light.Living_Room_Lights_Cold_5
 
 sensor:
   - platform: bom
