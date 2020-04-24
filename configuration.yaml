@@ -184,42 +184,42 @@ switch:
     optimistic: false
     qos: 0
     retain: false
-  - platform: mqtt
-    name: "Irrigation Relay 1"
-    state_topic: "stat/irrigation_0/POWER1"
-    command_topic: "cmnd/irrigation_0/POWER1"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
-  - platform: mqtt
-    name: "Irrigation Relay 2"
-    state_topic: "stat/irrigation_0/POWER2"
-    command_topic: "cmnd/irrigation_0/POWER2"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
-  - platform: mqtt
-    name: "Irrigation Relay 3"
-    state_topic: "stat/irrigation_0/POWER3"
-    command_topic: "cmnd/irrigation_0/POWER3"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
-  - platform: mqtt
-    name: "Irrigation Relay 4"
-    state_topic: "stat/irrigation_0/POWER4"
-    command_topic: "cmnd/irrigation_0/POWER4"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
+  ##- platform: mqtt
+  ##  name: "Irrigation Relay 1"
+  ##  state_topic: "stat/irrigation_0/POWER1"
+  ##  command_topic: "cmnd/irrigation_0/POWER1"
+  ##  payload_on: "ON"
+  ##  payload_off: "OFF"
+  ##  optimistic: false
+  ##  qos: 0
+  ##  retain: true
+  ##- platform: mqtt
+  ##  name: "Irrigation Relay 2"
+  ##  state_topic: "stat/irrigation_0/POWER2"
+  ##  command_topic: "cmnd/irrigation_0/POWER2"
+  ##  payload_on: "ON"
+  ##  payload_off: "OFF"
+  ##  optimistic: false
+  ##  qos: 0
+  ##  retain: true
+  ##- platform: mqtt
+  ##  name: "Irrigation Relay 3"
+  ##  state_topic: "stat/irrigation_0/POWER3"
+  ##  command_topic: "cmnd/irrigation_0/POWER3"
+  ##  payload_on: "ON"
+  ##  payload_off: "OFF"
+  ##  optimistic: false
+  ##  qos: 0
+  ##  retain: true
+  ##- platform: mqtt
+  ##  name: "Irrigation Relay 4"
+  ##  state_topic: "stat/irrigation_0/POWER4"
+  ##  command_topic: "cmnd/irrigation_0/POWER4"
+  ##  payload_on: "ON"
+  ##  payload_off: "OFF"
+  ##  optimistic: false
+  ##  qos: 0
+  ##  retain: true
   - platform: mqtt
     name: "Irrigation Relay 5"
     state_topic: "stat/irrigation_1/POWER1"
@@ -473,38 +473,38 @@ sensor:
     end: '{{ now() }}'
     duration:
       days: 3
-  - platform: history_stats
-    name: Irrigation_1_on_time_18h
-    entity_id: switch.Irrigation_Relay_1
-    state: 'on'
-    type: time
-    end: '{{ now() }}'
-    duration:
-      hours: 18
-  - platform: history_stats
-    name: Irrigation_2_on_time_18h
-    entity_id: switch.Irrigation_Relay_2
-    state: 'on'
-    type: time
-    end: '{{ now() }}'
-    duration:
-      hours: 18
-  - platform: history_stats
-    name: Irrigation_3_on_time_18h
-    entity_id: switch.Irrigation_Relay_3
-    state: 'on'
-    type: time
-    end: '{{ now() }}'
-    duration:
-      hours: 18
-  - platform: history_stats
-    name: Irrigation_4_on_time_18h
-    entity_id: switch.Irrigation_Relay_4
-    state: 'on'
-    type: time
-    end: '{{ now() }}'
-    duration:
-      hours: 18
+  ##- platform: history_stats
+  ##  name: Irrigation_1_on_time_18h
+  ##  entity_id: switch.Irrigation_Relay_1
+  ##  state: 'on'
+  ##  type: time
+  ##  end: '{{ now() }}'
+  ##  duration:
+  ##    hours: 18
+  ##- platform: history_stats
+  ##  name: Irrigation_2_on_time_18h
+  ##  entity_id: switch.Irrigation_Relay_2
+  ##  state: 'on'
+  ##  type: time
+  ##  end: '{{ now() }}'
+  ##  duration:
+  ##    hours: 18
+  ##- platform: history_stats
+  ##  name: Irrigation_3_on_time_18h
+  ##  entity_id: switch.Irrigation_Relay_3
+  ##  state: 'on'
+  ##  type: time
+  ##  end: '{{ now() }}'
+  ##  duration:
+  ##    hours: 18
+  ## - platform: history_stats
+  ##  name: Irrigation_4_on_time_18h
+  ##  entity_id: switch.Irrigation_Relay_4
+  ##  state: 'on'
+  ##  type: time
+  ##  end: '{{ now() }}'
+  ##  duration:
+  ##    hours: 18
   - platform: history_stats
     name: Irrigation_5_on_time_18h
     entity_id: switch.Irrigation_Relay_5
@@ -736,24 +736,24 @@ group:
     name: Back Garden
     entities:
       - input_number.bamboo_tap_run_time
-      - sensor.Irrigation_2_on_time_18h
+      ##- sensor.Irrigation_2_on_time_18h
       - timer.bamboo_tap
-      - switch.Irrigation_Relay_2
+      ##- switch.Irrigation_Relay_2
       - input_number.master_tap_run_time
-      - sensor.Irrigation_3_on_time_18h
+      ##- sensor.Irrigation_3_on_time_18h
       - timer.master_tap
-      - switch.Irrigation_Relay_3
+      ##- switch.Irrigation_Relay_3
       - input_number.citrus_tap_run_time
-      - sensor.Irrigation_4_on_time_18h
+      ##- sensor.Irrigation_4_on_time_18h
       - timer.citrus_tap
-      - switch.Irrigation_Relay_4
+      ##- switch.Irrigation_Relay_4
 
   irrigation:
     - input_number.irrigation_run_time
-    - switch.Irrigation_Relay_1
-    - switch.Irrigation_Relay_2
-    - switch.Irrigation_Relay_3
-    - switch.Irrigation_Relay_4
+    ##- switch.Irrigation_Relay_1
+    ##- switch.Irrigation_Relay_2
+    ##- switch.Irrigation_Relay_3
+    ##- switch.Irrigation_Relay_4
     - switch.Irrigation_Relay_7
     - switch.Irrigation_Relay_8
   environment:
@@ -991,25 +991,25 @@ google_assistant:
       room: Bedroom
       expose: true
     # Backyard
-    switch.Irrigation_Relay_2:
-      name: Bamboo Tap
-      aliases:
-        - Bamboo Tap
-        - Bamboo
-        - Bamboo Irrigation
-      room: Backyard
-      expose: true
-    switch.Irrigation_Relay_4:
-      name: Vegepod Tap
-      aliases:
-        - Vegepod Tap
-        - Vegepod
-        - Vegepod Irrigation
-        - Vege Pod
-        - Vege Pod Tap
-        - Citrus Tap
-      room: Backyard
-      expose: true
+    ##switch.Irrigation_Relay_2:
+    ##  name: Bamboo Tap
+    ##  aliases:
+    ##    - Bamboo Tap
+    ##    - Bamboo
+    ##    - Bamboo Irrigation
+    ##  room: Backyard
+    ##  expose: true
+    ##switch.Irrigation_Relay_4:
+    ##  name: Vegepod Tap
+    ##  aliases:
+    ##    - Vegepod Tap
+    ##    - Vegepod
+    ##    - Vegepod Irrigation
+    ##    - Vege Pod
+    ##    - Vege Pod Tap
+    ##    - Citrus Tap
+    ##  room: Backyard
+    ##  expose: true
     # Garden
     switch.Irrigation_Relay_5:
       name: Front Garden Tap
