@@ -7,97 +7,6 @@
   action:
   - service: light.turn_off
     entity_id: group.upstairs
-- id: irrigation_1_daily_start
-  alias: 'Irrigation: Relay 1 Daily start'
-  trigger:
-  - at: '23:15:00'
-    platform: time
-  condition:
-  - above: 48
-    condition: numeric_state
-    entity_id: sensor.hours_of_no_rain_in_last_3_days
-  - below: 2
-    condition: numeric_state
-    entity_id: sensor.bom_rain_today
-  - below: 0.5
-    condition: numeric_state
-    entity_id: sensor.irrigation_1_on_time_today
-  - weekday:
-    - sat
-    condition: time
-  action:
-  - data: {}
-    entity_id: switch.irrigation_relay_1
-    service: homeassistant.turn_on
-- id: irrigation_4_daily_start
-  alias: 'Irrigation: Relay 4 Daily start (Citrus)'
-  trigger:
-  - at: '20:30:00'
-    platform: time
-  condition:
-  - above: 48
-    condition: numeric_state
-    entity_id: sensor.hours_of_no_rain_in_last_3_days
-  - below: 2
-    condition: numeric_state
-    entity_id: sensor.bom_rain_today
-  - weekday:
-    - sat
-    condition: time
-  action:
-  - entity_id: switch.irrigation_relay_4
-    service: homeassistant.turn_on
-- action:
-  - data: {}
-    entity_id: switch.irrigation_relay_2
-    service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 2 Daily start (Bamboo)'
-  condition:
-  - above: '48'
-    condition: numeric_state
-    entity_id: sensor.hours_of_no_rain_in_last_3_days
-  - below: '2'
-    condition: numeric_state
-    entity_id: sensor.bom_rain_today
-  - weekday:
-    - sat
-    condition: time
-  id: '1505475104245'
-  trigger:
-  - at: '21:30:00'
-    platform: time
-- action:
-  - data: {}
-    entity_id: switch.irrigation_relay_2
-    service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 2 Daily start (Daily Morning Bamboo)'
-  condition:
-  - above: '40'
-    condition: numeric_state
-    entity_id: sensor.hours_of_no_rain_in_last_3_days
-  - below: '2'
-    condition: numeric_state
-    entity_id: sensor.bom_rain_today
-  id: '1505475104250'
-  trigger:
-  - at: '6:03:00'
-    platform: time
-- action:
-  - data: {}
-    entity_id: switch.irrigation_relay_4
-    service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 4 Daily start (Daily Morning Citrus)'
-  condition:
-  - above: '40'
-    condition: numeric_state
-    entity_id: sensor.hours_of_no_rain_in_last_3_days
-  - below: '2'
-    condition: numeric_state
-    entity_id: sensor.bom_rain_today
-  id: '1505475104251'
-  trigger:
-  - at: '6:03:00'
-    platform: time
 - action:
   - data: {}
     entity_id: switch.irrigation_relay_5
@@ -161,61 +70,18 @@
 - action:
   - service: timer.start
     data_template:
-      entity_id: timer.bamboo_tap
-      duration: 00:{{ states.input_number.bamboo_tap_run_time.state | int }}:00
-  alias: Turn Bamboo Irrigation On
-  id: Timerstart_bamboo_tap
-  trigger:
-    platform: state
-    entity_id: switch.irrigation_relay_2
-    to: 'on'
-- action:
-  - service: homeassistant.turn_off
-    data:
-      entity_id: switch.irrigation_relay_2
-  alias: Bamboo Tap Timerstop
-  id: Timerstop_bamboo_tap
-  trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.bamboo_tap
-- action:
-  - service: timer.start
-    data_template:
-      entity_id: timer.citrus_tap
-      duration: 00:{{ states.input_number.citrus_tap_run_time.state | int }}:00
-  alias: Turn Citrus Irrigation On
-  id: Timerstart_citrus_tap
-  trigger:
-    platform: state
-    entity_id: switch.irrigation_relay_4
-    to: 'on'
-- action:
-  - service: script.turn_on
-    entity_id: script.turn_off_citrus_irrigation
-  alias: Citrus Tap Timerstop
-  id: Timerstop_citrus_tap
-  trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.citrus_tap
-- action:
-  - service: timer.start
-    data_template:
       entity_id: timer.master_tap
       duration: 00:{{ states.input_number.master_tap_run_time.state | int }}:00
   alias: Turn Master Irrigation On
   id: Timerstart_master_tap
   trigger:
     platform: state
-    entity_id: switch.irrigation_relay_3
+    entity_id: switch.relay3_2
     to: 'on'
 - action:
   - service: homeassistant.turn_off
     data:
-      entity_id: switch.irrigation_relay_3
+      entity_id: switch.relay3_2
   alias: Master Timerstop
   id: Timerstop_master_tap
   trigger:
@@ -225,30 +91,97 @@
       entity_id: timer.master_tap
 - action:
   - service: homeassistant.turn_on
-    entity_id: switch.irrigation_relay_3
+    entity_id: switch.relay3_2
   alias: Turn master solenoid on for Bamboo Tap
   condition: []
   id: '1537592826761'
   trigger:
-  - entity_id: switch.irrigation_relay_2
+  - entity_id: switch.relay2_2
     platform: state
     to: 'on'
 - action:
   - service: homeassistant.turn_on
-    entity_id: switch.irrigation_relay_3
+    entity_id: switch.relay3_2
   alias: Turn master solenoid on for Citrus Tap
   condition: []
   id: '1537592826762'
   trigger:
-  - entity_id: switch.irrigation_relay_4
+  - entity_id: switch.relay4_2
     platform: state
     to: 'on'
 - id: letsencrypt-renewal
-  alias: "Let's Encrypt Renewal"
+  alias: Let's Encrypt Renewal
   trigger:
   - platform: time
-    at: '00:00:00'
+    at: 00:00:00
   action:
   - service: hassio.addon_restart
     data:
       addon: core_letsencrypt
+- id: '1587734953493'
+  alias: Turn on new backyard tap
+  description: ''
+  trigger:
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay2_2
+    platform: device
+    type: turned_on
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay4_2
+    platform: device
+    type: turned_on
+  condition:
+  - condition: device
+    device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.backyard_tap
+    type: is_off
+  action:
+  - delay: '1'
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay3_2
+    type: turn_on
+  - delay: '2'
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.backyard_tap
+    type: turn_on
+- id: '1587735321441'
+  alias: Turn off new backyard tap
+  description: ''
+  trigger:
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay4_2
+    platform: device
+    type: turned_off
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay2_2
+    platform: device
+    type: turned_off
+  condition:
+  - condition: device
+    device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay2_2
+    type: is_off
+  - condition: device
+    device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay4_2
+    type: is_off
+  action:
+  - delay: '2'
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.backyard_tap
+    type: turn_off
+  - delay: '2'
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay3_2
+    type: turn_off

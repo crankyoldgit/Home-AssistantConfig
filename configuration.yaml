@@ -473,38 +473,46 @@ sensor:
     end: '{{ now() }}'
     duration:
       days: 3
-  ##- platform: history_stats
-  ##  name: Irrigation_1_on_time_18h
-  ##  entity_id: switch.Irrigation_Relay_1
-  ##  state: 'on'
-  ##  type: time
-  ##  end: '{{ now() }}'
-  ##  duration:
-  ##    hours: 18
-  ##- platform: history_stats
-  ##  name: Irrigation_2_on_time_18h
-  ##  entity_id: switch.Irrigation_Relay_2
-  ##  state: 'on'
-  ##  type: time
-  ##  end: '{{ now() }}'
-  ##  duration:
-  ##    hours: 18
-  ##- platform: history_stats
-  ##  name: Irrigation_3_on_time_18h
-  ##  entity_id: switch.Irrigation_Relay_3
-  ##  state: 'on'
-  ##  type: time
-  ##  end: '{{ now() }}'
-  ##  duration:
-  ##    hours: 18
-  ## - platform: history_stats
-  ##  name: Irrigation_4_on_time_18h
-  ##  entity_id: switch.Irrigation_Relay_4
-  ##  state: 'on'
-  ##  type: time
-  ##  end: '{{ now() }}'
-  ##  duration:
-  ##    hours: 18
+  - platform: history_stats
+    name: Backyard_Tap_on_time_18h
+    entity_id: switch.backyard_tap
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_1_on_time_18h
+    entity_id: switch.relay1_2
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_2_on_time_18h
+    entity_id: switch.relay2_2
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_3_on_time_18h
+    entity_id: switch.relay3_2
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
+  - platform: history_stats
+    name: Irrigation_4_on_time_18h
+    entity_id: switch.relay4_2
+    state: 'on'
+    type: time
+    end: '{{ now() }}'
+    duration:
+      hours: 18
   - platform: history_stats
     name: Irrigation_5_on_time_18h
     entity_id: switch.Irrigation_Relay_5
@@ -625,23 +633,6 @@ sensor:
     unit_of_measurement : "C"
 
 group:
-  ### Views
-  livingroom_view:
-    name: Living Room
-    entities:
-      group.living_room
-  kitchen_view:
-    name: Kitchen
-    entities:
-      - group.kitchen
-  cat_room_view:
-    name: Cat Room
-    entities:
-      - group.cat_room
-  main_bedroom_view:
-    name: Bedroom
-    entities:
-      - group.main_bedroom
   garden_view:
     name: Garden
     entities:
@@ -735,25 +726,27 @@ group:
   back_garden:
     name: Back Garden
     entities:
+      - switch.backyard_tap
       - input_number.bamboo_tap_run_time
-      ##- sensor.Irrigation_2_on_time_18h
+      - sensor.Irrigation_2_on_time_18h
       - timer.bamboo_tap
-      ##- switch.Irrigation_Relay_2
+      - switch.relay2_2
       - input_number.master_tap_run_time
-      ##- sensor.Irrigation_3_on_time_18h
+      - sensor.Irrigation_3_on_time_18h
       - timer.master_tap
-      ##- switch.Irrigation_Relay_3
+      - switch.relay3_2
       - input_number.citrus_tap_run_time
-      ##- sensor.Irrigation_4_on_time_18h
+      - sensor.Irrigation_4_on_time_18h
       - timer.citrus_tap
-      ##- switch.Irrigation_Relay_4
+      - switch.relay4_2
 
   irrigation:
     - input_number.irrigation_run_time
-    ##- switch.Irrigation_Relay_1
-    ##- switch.Irrigation_Relay_2
-    ##- switch.Irrigation_Relay_3
-    ##- switch.Irrigation_Relay_4
+    - switch.backyard_tap
+    - switch.relay1_2
+    - switch.relay2_2
+    - switch.relay3_2
+    - switch.relay4_2
     - switch.Irrigation_Relay_7
     - switch.Irrigation_Relay_8
   environment:
@@ -991,25 +984,25 @@ google_assistant:
       room: Bedroom
       expose: true
     # Backyard
-    ##switch.Irrigation_Relay_2:
-    ##  name: Bamboo Tap
-    ##  aliases:
-    ##    - Bamboo Tap
-    ##    - Bamboo
-    ##    - Bamboo Irrigation
-    ##  room: Backyard
-    ##  expose: true
-    ##switch.Irrigation_Relay_4:
-    ##  name: Vegepod Tap
-    ##  aliases:
-    ##    - Vegepod Tap
-    ##    - Vegepod
-    ##    - Vegepod Irrigation
-    ##    - Vege Pod
-    ##    - Vege Pod Tap
-    ##    - Citrus Tap
-    ##  room: Backyard
-    ##  expose: true
+    switch.relay2_2:
+      name: Bamboo Tap
+      aliases:
+        - Bamboo Tap
+        - Bamboo
+        - Bamboo Irrigation
+      room: Backyard
+      expose: true
+    switch.relay4_2:
+      name: Vegepod Tap
+      aliases:
+        - Vegepod Tap
+        - Vegepod
+        - Vegepod Irrigation
+        - Vege Pod
+        - Vege Pod Tap
+        - Citrus Tap
+      room: Backyard
+      expose: true
     # Garden
     switch.Irrigation_Relay_5:
       name: Front Garden Tap

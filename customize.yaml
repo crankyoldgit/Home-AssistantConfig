@@ -49,21 +49,21 @@ group.living_room:
 group.living_room_lights_warm:
   friendly_name: Living Room Lights
   aliases:
-    - Warm Lights
-    - Usual Lights
-    - Low Lights
+  - Warm Lights
+  - Usual Lights
+  - Low Lights
 group.tv_lights:
   friendly_name: Television Lights
   aliases:
-    - TV Lights
-    - TV Light
+  - TV Lights
+  - TV Light
 group.Couch_lights:
   friendly_name: Couch Lights
 group.doorway_lights:
   friendly_name: Doorway lights
   aliases:
-    - Door Lights
-    - Door Light
+  - Door Lights
+  - Door Light
 group.cat_room:
   friendly_name: Cat Room
 group.main_bedroom:
@@ -87,3 +87,15 @@ climate.living_room_aircon:
   friendly_name: Air Conditioner
 switch.fountain:
   icon: mdi:fountain
+switch.relay2_2:
+  friendly_name: Bamboo Tap
+  icon: mdi:water
+switch.backyard_tap:
+  friendly_name: Backyard Tap
+  icon: hass:water
+switch.relay4_2:
+  friendly_name: Vegepod Tap
+  icon: hass:water
+switch.relay3_2:
+  friendly_name: Master Solinoid
+  icon: hass:water
