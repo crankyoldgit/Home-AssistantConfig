@@ -220,42 +220,42 @@ switch:
   ##  optimistic: false
   ##  qos: 0
   ##  retain: true
-  - platform: mqtt
-    name: "Irrigation Relay 5"
-    state_topic: "stat/irrigation_1/POWER1"
-    command_topic: "cmnd/irrigation_1/POWER1"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
-  - platform: mqtt
-    name: "Irrigation Relay 6"
-    state_topic: "stat/irrigation_1/POWER2"
-    command_topic: "cmnd/irrigation_1/POWER2"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
-  - platform: mqtt
-    name: "Irrigation Relay 7"
-    state_topic: "stat/irrigation_1/POWER3"
-    command_topic: "cmnd/irrigation_1/POWER3"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
-  - platform: mqtt
-    name: "Irrigation Relay 8"
-    state_topic: "stat/irrigation_1/POWER4"
-    command_topic: "cmnd/irrigation_1/POWER4"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: false
-    qos: 0
-    retain: true
+  #- platform: mqtt
+  #  name: "Irrigation Relay 5"
+  #  state_topic: "stat/irrigation_1/POWER1"
+  #  command_topic: "cmnd/irrigation_1/POWER1"
+  #  payload_on: "ON"
+  #  payload_off: "OFF"
+  #  optimistic: false
+  #  qos: 0
+  #  retain: true
+  #- platform: mqtt
+  #  name: "Irrigation Relay 6"
+  #  state_topic: "stat/irrigation_1/POWER2"
+  #  command_topic: "cmnd/irrigation_1/POWER2"
+  #  payload_on: "ON"
+  #  payload_off: "OFF"
+  #  optimistic: false
+  #  qos: 0
+  #  retain: true
+  #- platform: mqtt
+  #  name: "Irrigation Relay 7"
+  #  state_topic: "stat/irrigation_1/POWER3"
+  #  command_topic: "cmnd/irrigation_1/POWER3"
+  #  payload_on: "ON"
+  #  payload_off: "OFF"
+  #  optimistic: false
+  #  qos: 0
+  #  retain: true
+  #- platform: mqtt
+  #  name: "Irrigation Relay 8"
+  #  state_topic: "stat/irrigation_1/POWER4"
+  #  command_topic: "cmnd/irrigation_1/POWER4"
+  #  payload_on: "ON"
+  #  payload_off: "OFF"
+  #  optimistic: false
+  #  qos: 0
+  #  retain: true
   - platform: mqtt
     name: "Fountain"
     command_topic: "cmnd/fountain/POWER"

@@ -7,66 +7,6 @@
   action:
   - service: light.turn_off
     entity_id: group.upstairs
-- action:
-  - data: {}
-    entity_id: switch.irrigation_relay_5
-    service: homeassistant.turn_on
-  alias: 'Irrigation: Relay 5 Daily start (Front Garden)'
-  condition:
-  - above: '40'
-    condition: numeric_state
-    entity_id: sensor.hours_of_no_rain_in_last_3_days
-  - below: '2'
-    condition: numeric_state
-    entity_id: sensor.bom_rain_today
-  id: '1505475104246'
-  trigger:
-  - at: '19:01:00'
-    platform: time
-- action:
-  - service: timer.start
-    data_template:
-      entity_id: timer.front_garden
-      duration: 00:{{ states.input_number.front_garden_run_time.state | int }}:00
-  alias: Turn Front Garden Irrigation On
-  id: Timerstart_frontgarden
-  trigger:
-    platform: state
-    entity_id: switch.irrigation_relay_5
-    to: 'on'
-- action:
-  - service: homeassistant.turn_off
-    data:
-      entity_id: switch.irrigation_relay_5
-  alias: Front Garden Timerstop
-  id: Timerstop_frontgarden
-  trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.front_garden
-- action:
-  - service: timer.start
-    data_template:
-      entity_id: timer.carport_tap
-      duration: 00:{{ states.input_number.carport_tap_run_time.state | int }}:00
-  alias: Turn Carport Garden Irrigation On
-  id: Timerstart_carport_garden
-  trigger:
-    platform: state
-    entity_id: switch.irrigation_relay_6
-    to: 'on'
-- action:
-  - service: homeassistant.turn_off
-    data:
-      entity_id: switch.irrigation_relay_6
-  alias: Carport Garden Timerstop
-  id: Timerstop_carport_garden
-  trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.carport_tap
 - id: Timerstart_master_tap
   alias: Trigger the Bamboo Timer
   trigger:
@@ -253,4 +193,93 @@
   - device_id: d146fcaff11a4a1184feb7db7b778976
     domain: switch
     entity_id: switch.relay4_2
+    type: turn_off
+- id: '1588575129221'
+  alias: Turn on the Front Master tap
+  description: Turn on the main tap when a solenoid gets turned on.
+  trigger:
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay5
+    platform: device
+    type: turned_on
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay6
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - delay: '2'
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.front_garden_tap
+    type: turn_on
+- id: '1588575426923'
+  alias: Turn off the Front Master tap
+  description: Turn off the main tap when all the solenoids are off.
+  trigger:
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay5
+    platform: device
+    type: turned_off
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay6
+    platform: device
+    type: turned_off
+  condition:
+  - condition: device
+    device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay5
+    type: is_off
+  - condition: device
+    device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay6
+    type: is_off
+  action:
+  - delay: '1'
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.front_garden_tap
+    type: turn_off
+- id: '1588576798684'
+  alias: Bi-daily water the Front Garden
+  description: Water the front vegepod and plants about twice daily at sunrise for
+    5 mins
+  trigger:
+  - event: sunrise
+    offset: 00:10:00
+    platform: sun
+  condition:
+  - after: 00:00:00
+    before: '23:59:59'
+    condition: time
+    weekday:
+    - sun
+    - tue
+    - thu
+  - above: '48'
+    condition: numeric_state
+    entity_id: sensor.hours_of_no_rain_in_last_3_days
+  - below: '5'
+    condition: numeric_state
+    entity_id: sensor.bom_rain_today
+  action:
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay5
+    type: turn_on
+  - delay: '300'
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.front_garden_tap
+    type: turn_off
+  - delay: '5'
+  - device_id: 61d75c74ebc24cd18540c73168a38d17
+    domain: switch
+    entity_id: switch.relay5
     type: turn_off
