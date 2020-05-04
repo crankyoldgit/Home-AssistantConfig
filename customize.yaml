@@ -99,3 +99,12 @@ switch.relay4_2:
 switch.relay3_2:
   friendly_name: Master Solinoid
   icon: hass:water
+input_number.bamboo_run_time:
+  icon: mdi:clock-end
+  initial: 10
+input_number.vege_pod_run_time:
+  icon: mdi:clock-end
+  initial: 3
+input_number.vegepod_run_time:
+  icon: mdi:clock-end
+  initial: 3

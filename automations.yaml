@@ -67,28 +67,38 @@
     event_type: timer.finished
     event_data:
       entity_id: timer.carport_tap
-- action:
-  - service: timer.start
+- id: Timerstart_master_tap
+  alias: Trigger the Bamboo Timer
+  trigger:
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay2_2
+    platform: device
+    type: turned_on
+  action:
+  - data: {}
     data_template:
-      entity_id: timer.master_tap
-      duration: 00:{{ states.input_number.master_tap_run_time.state | int }}:00
-  alias: Turn Master Irrigation On
-  id: Timerstart_master_tap
-  trigger:
-    platform: state
-    entity_id: switch.relay3_2
-    to: 'on'
-- action:
-  - service: homeassistant.turn_off
-    data:
-      entity_id: switch.relay3_2
+      duration: 00:{{ states.input_number.bamboo_run_time.state | int }}:00
+      entity_id: timer.bamboo_tap
+    entity_id: timer.bamboo_tap
+    service: timer.start
+- id: Timerstop_master_tap
   alias: Master Timerstop
-  id: Timerstop_master_tap
   trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
+  - event_data:
       entity_id: timer.master_tap
+    event_type: timer.finished
+    platform: event
+  action:
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay2_2
+    type: turn_off
+  - delay: '1'
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay4_2
+    type: turn_off
 - action:
   - service: homeassistant.turn_on
     entity_id: switch.relay3_2
@@ -184,4 +194,63 @@
   - device_id: d146fcaff11a4a1184feb7db7b778976
     domain: switch
     entity_id: switch.relay3_2
+    type: turn_off
+- id: '1587912758871'
+  alias: Weekly Bamboo Watering
+  description: Turn on the bamboo tap when the sun rises
+  trigger:
+  - event: sunrise
+    platform: sun
+  condition:
+  - after: 00:00:00
+    before: '23:59:59'
+    condition: time
+    weekday:
+    - sat
+  - above: '48'
+    condition: numeric_state
+    entity_id: sensor.hours_of_no_rain_in_last_3_days
+  - below: '5'
+    condition: numeric_state
+    entity_id: sensor.bom_rain_today
+  action:
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay2_2
+    type: turn_on
+  - delay: 00:10:00
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay2_2
+    type: turn_off
+- id: '1587948287507'
+  alias: Trigger Vegepod Timer
+  description: Start the timer to automatically turn off the Vegepod tap after a period
+  trigger:
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay4_2
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - data: {}
+    data_template:
+      duration: 00:{{ states.input_number.vegepod_run_time.state | int }}:00
+      entity_id: timer.vegepod_tap
+    entity_id: timer.vegepod_tap
+    service: timer.start
+- id: '1587949237228'
+  alias: Vegepod timer finished
+  description: ''
+  trigger:
+  - event_data:
+      entity_id: timer.vegepod_tap
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+  - device_id: d146fcaff11a4a1184feb7db7b778976
+    domain: switch
+    entity_id: switch.relay4_2
     type: turn_off

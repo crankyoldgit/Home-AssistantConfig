@@ -838,6 +838,8 @@ timer:
     name: Bamboo Tap timer
   citrus_tap:
     name: Citrus Tap timer
+  vegepod_tap:
+    name: Vegepod Tap timer
   master_tap:
     name: Master Tap timer
 
