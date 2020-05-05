@@ -1021,3 +1021,7 @@ google_assistant:
         - Front Door Fountain
       room: Garden
       expose: true
+
+lifx:
+  light:
+    - broadcast: 10.20.0.28
