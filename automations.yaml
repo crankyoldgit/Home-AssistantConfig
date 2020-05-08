@@ -283,3 +283,19 @@
     domain: switch
     entity_id: switch.relay5
     type: turn_off
+- id: '1588905693049'
+  alias: Sync Tasmota states
+  description: Sync Tasmota states
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition: []
+  action:
+  - data:
+      payload: ''
+      topic: cmnd/tasmotas/state
+    service: mqtt.publish
+  - data:
+      payload: ''
+      topic: cmnd/sonoffs/state
+    service: mqtt.publish
